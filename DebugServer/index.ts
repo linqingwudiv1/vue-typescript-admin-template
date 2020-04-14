@@ -43,11 +43,11 @@ export default (app:Express, http:any) => {
     })
   })
 
-  app.use('/dev_api/articles',articleRoute );
-  app.use('/dev_api/roles',roleRoute );
-  app.use('/dev_api/routes',routeRoute );
-  app.use('/dev_api/transaction',transactionRoute );
-  app.use('/dev_api/users',userRoute );
+  app.use('/dev-api/articles',articleRoute );
+  app.use('/dev-api/roles',roleRoute );
+  app.use('/dev-api/routes',routeRoute );
+  app.use('/dev-api/transaction',transactionRoute );
+  app.use('/dev-api/users',userRoute );
   //app.use('roles', routeRoute);
 
 }

@@ -4,7 +4,7 @@
   "private": true,
   "author": "Chong Guo <armourcy@gmail.com>",
   "scripts": {
-    "serve": "concurrently \"npm:mock\" \"vue-cli-service serve\"",
+    "serve": "concurrently \"vue-cli-service serve\"",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
