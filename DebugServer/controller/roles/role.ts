@@ -1,8 +1,9 @@
 import faker from 'faker'
-import { Response, Request } from 'express'
-import { asyncRoutes, constantRoutes } from './routes'
-import { IRoleData } from '../../src/api/types'
+import { Response, Request, Router } from 'express'
+import { asyncRoutes, constantRoutes } from '../routes/route'
+import { IRoleData } from '@/api/types';
 
+const route = Router();
 const routes = [...constantRoutes, ...asyncRoutes]
 const roles: IRoleData[] = [
   {
@@ -35,7 +36,7 @@ const roles: IRoleData[] = [
   }
 ]
 
-export const getRoles = (req: Request, res: Response) => {
+route.get('/', (req, res) => {
   return res.json({
     code: 20000,
     data: {
@@ -43,18 +44,18 @@ export const getRoles = (req: Request, res: Response) => {
       items: roles
     }
   })
-}
+});
 
-export const createRole = (req: Request, res: Response) => {
+route.post('/', (req, res) => {
   return res.json({
     code: 20000,
     data: {
       key: faker.random.number({ min: 3, max: 10000 })
     }
   })
-}
+});
 
-export const updateRole = (req: Request, res: Response) => {
+route.put('/',  (req, res) => {
   const { role } = req.body
   return res.json({
     code: 20000,
@@ -62,19 +63,13 @@ export const updateRole = (req: Request, res: Response) => {
       role
     }
   })
-}
+});
 
-export const deleteRole = (req: Request, res: Response) => {
+route.delete('/', (req, res) => {
   return res.json({
     code: 20000,
   })
-}
+});
 
-export const getRoutes = (req: Request, res: Response) => {
-  return res.json({
-    code: 20000,
-    data: {
-      routes
-    }
-  })
-}
+
+export default route ;

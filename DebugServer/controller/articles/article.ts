@@ -1,7 +1,8 @@
 import faker from 'faker'
-import { Response, Request } from 'express'
-import { IArticleData } from '../src/api/types'
+import { Response, Request,Router } from 'express'
+import { IArticleData } from '@/api/types'
 
+const route = Router();
 const articleList: IArticleData[] = []
 const articleCount = 100
 const mockFullContent = '<p>I am testing data, I am testing data.</p><p><img src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943"></p>'
@@ -26,7 +27,7 @@ for (let i = 0; i < articleCount; i++) {
   })
 }
 
-export const getArticles = (req: Request, res: Response) => {
+route .get('/', (req, res) => {
   const { importance, type, title, page = 1, limit = 20, sort } = req.query
 
   let mockList = articleList.filter(item => {
@@ -49,9 +50,9 @@ export const getArticles = (req: Request, res: Response) => {
       items: pageList
     }
   })
-}
+});
 
-export const getArticle = (req: Request, res: Response) => {
+route .get('/', (req, res) => {
   const { id } = req.params
   for (const article of articleList) {
     if (article.id.toString() === id) {
@@ -67,9 +68,9 @@ export const getArticle = (req: Request, res: Response) => {
     code: 70001,
     message: 'Article not found'
   })
-}
+});
 
-export const createArticle = (req: Request, res: Response) => {
+route.post('/', (req, res) => {
   const { article } = req.body
   return res.json({
     code: 20000,
@@ -77,9 +78,9 @@ export const createArticle = (req: Request, res: Response) => {
       article
     }
   })
-}
+});
 
-export const updateArticle = (req: Request, res: Response) => {
+route.put('/', (req, res) => {
   const { id } = req.params
   const { article } = req.body
   for (const v of articleList) {
@@ -96,15 +97,15 @@ export const updateArticle = (req: Request, res: Response) => {
     code: 70001,
     message: 'Article not found'
   })
-}
+});
 
-export const deleteArticle = (req: Request, res: Response) => {
+route.delete('/', (req, res) => {
   return res.json({
     code: 20000,
   })
-}
+});
 
-export const getPageviews = (req: Request, res: Response) => {
+route.get('/getPageviews', (req, res) => {
   return res.json({
     code: 20000,
     data: {
@@ -116,4 +117,6 @@ export const getPageviews = (req: Request, res: Response) => {
       ]
     }
   })
-}
+});
+
+export default route ;

@@ -1,7 +1,7 @@
 import faker from 'faker'
-import { Response, Request } from 'express'
-import { ITransactionData } from '../src/api/types'
-
+import { Response, Request, Router } from 'express'
+import { ITransactionData } from '@/api/types'
+const route = Router();
 const transactionList: ITransactionData[] = []
 const transactionCount = 20
 
@@ -24,3 +24,6 @@ export const getTransactions = (req: Request, res: Response) => {
     }
   })
 }
+
+
+export default route ;

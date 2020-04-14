@@ -5,13 +5,15 @@
   "author": "Chong Guo <armourcy@gmail.com>",
   "scripts": {
     "serve": "concurrently \"npm:mock\" \"vue-cli-service serve\"",
+    "test:unit": "jest --clearCache && vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
-    "lint": "vue-cli-service lint",
+    "express": "vue-cli-service express:watch",
+    "express:run": "vue-cli-service express:run",
     "mock": "cd mock && ts-node-dev mock-server.ts",
-    "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "jest --clearCache && vue-cli-service test:unit"
+    "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.0",
@@ -113,6 +115,7 @@
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3",
     "vue-cli-plugin-element": "^1.0.1",
+    "vue-cli-plugin-express": "^1.0.2",
     "vue-cli-plugin-style-resources-loader": "^0.1.4",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.1"

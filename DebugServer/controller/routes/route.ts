@@ -1,4 +1,7 @@
+import { Router } from 'express';
+
 // Just a mock data
+const route = Router();
 
 export const constantRoutes = [
   {
@@ -608,3 +611,16 @@ export const asyncRoutes = [
     meta: { hidden: true }
   }
 ]
+
+const routes = [...constantRoutes, ...asyncRoutes];
+
+route.get('/', (req, res) => {
+  return res.json({
+    code: 20000,
+    data: {
+      routes
+    }
+  })
+});
+
+export default route ;
