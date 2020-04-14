@@ -2,9 +2,9 @@
   "name": "vue-typescript-admin-template",
   "version": "1.0.0",
   "private": true,
-  "author": "Chong Guo <armourcy@gmail.com>",
+  "author": "Chong Guo <armourcy@gmail.com> | lq<875191946@qq.com>",
   "scripts": {
-    "serve": "concurrently \"vue-cli-service serve\"",
+    "serve": "vue-cli-service serve",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
@@ -131,7 +131,9 @@
     "typescript",
     "admin",
     "template",
-    "element-ui"
+    "element-ui",
+    "xmlrequest",
+    "net core template"
   ],
   "lint-staged": {
     "*.{js,vue}": [

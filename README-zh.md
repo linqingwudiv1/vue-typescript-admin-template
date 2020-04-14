@@ -25,6 +25,20 @@
 
 [English](./README.md) | 简体中文
 
+## fork说明
+
+移除Mock 改用Express 插件作为测试API服务器..(DebugServer目录下)
+
+```bash
+yarn serve
+```
+
+前,需要:
+
+```bash
+yarn express
+```
+
 ## 总览
 
 [vue-typescript-admin-template](http://armour.github.io/vue-typescript-admin-template) 是一个后台前端解决方案，它基于 [vue](https://github.com/vuejs/vue), [typescript](https://www.typescriptlang.org/) 和 [element-ui](https://github.com/ElemeFE/element)实现。原始的 Javascript 版本的代码是由 [PanJiaChen](https://github.com/PanJiaChen) 开发维护的 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)， 十分感谢大佬对开源社区做出的贡献 :)

@@ -1,6 +1,6 @@
-import faker from 'faker'
-import { Response, Request,Router } from 'express'
-import { IArticleData } from '@/api/types'
+import faker from 'faker';
+import { Response, Request,Router } from 'express';
+import { IArticleData } from '@/api/types';
 
 const route = Router();
 const articleList: IArticleData[] = []
