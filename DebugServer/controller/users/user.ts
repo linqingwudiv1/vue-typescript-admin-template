@@ -44,13 +44,13 @@ for (let i = 2; i < userCount; i++) {
   })
 }
 
-route.post('register',  (req, res) => {
+route.post('/register',  (req, res) => {
   return res.json({
     code: 20000
   })
 });
 
-route.post('login',   (req, res) => {
+route.post('/login',   (req, res) => {
   const { username } = req.body
   for (const user of userList) {
     if (user.username === username) {
@@ -68,7 +68,7 @@ route.post('login',   (req, res) => {
   })
 });
 
-route.post('loout',   (req, res) => {
+route.post('/logout',   (req, res) => {
   return res.json({
     code: 20000
   })

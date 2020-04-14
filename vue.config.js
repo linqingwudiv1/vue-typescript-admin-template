@@ -4,13 +4,31 @@ const path = require('path')
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, on Mac: sudo npm run / sudo yarn
-const devServerPort = 9527 // TODO: get this variable from setting.ts
-const DevAPIServerPort = 3000 // TODO: get this variable from setting.ts
-const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
+
+
+// TODO: get this variable from setting.ts
+const devServerPort = 9527;
+// TODO: get this variable from setting.ts 
+const name = 'Vue Template Admin'; 
+
+
+const CompressionPlugin = require('compression-webpack-plugin');
+
+const plugins_custom = [];
+
+if (process.env.NODE_ENV === 'production')
+{
+  plugins_custom.push(new CompressionPlugin({
+    test: /\.js$|\.html$|\.css$|\.css/,
+    threshold: 10240,
+    deleteOriginalAssets: false
+  }));
+};
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/vue-typescript-admin-template/' : '/',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  lintOnSave: false ,
+  crossorigin:'anonymous',
   productionSourceMap: false,
   devServer: {
     port: devServerPort,
@@ -19,19 +37,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    progress: false,
-    proxy: {
-      // change xxx-api/login => /mock-api/v1/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:${DevAPIServerPort}/dev-api/v1`,
-        changeOrigin: true, // needed for virtual hosted sites
-        ws: true, // proxy websockets
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
-        }
-      }
-    }
+    progress: false
   },
   pwa: {
     name: name,
@@ -53,16 +59,33 @@ module.exports = {
       serverDir: 'DebugServer'
     }
   },
+  css: {
+    loaderOptions: {
+      stylus: {
+        import: "~@/src/styles/Global.styl"   
+      }
+    }
+  },
+  configureWebpack:{
+    devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map': 'cheap-eval-source-map',
+    plugins:plugins_custom,
+    //#region cdn
+    /*
+    externals: {
+      vue: "Vue",
+      vuex: "Vuex",
+      "vue-router": "VueRouter",
+      "element-ui": "ELEMENT",
+      "echart": "EChart"
+    }
+    */
+    //#endregion
+  },
   chainWebpack(config) {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     config.set('name', name)
 
-    // https://webpack.js.org/configuration/devtool/#development
-    config
-      .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-eval-source-map')
-      )
 
     // remove vue-cli-service's progress output
     config.plugins.delete('progress')

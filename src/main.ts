@@ -43,8 +43,8 @@ Object.keys(filters).forEach(key => {
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  i18n,
+  router:router,
+  store:store,
+  i18n: i18n,
   render: (h) => h(App)
 }).$mount('#app')
