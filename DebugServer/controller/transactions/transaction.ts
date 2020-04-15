@@ -15,7 +15,7 @@ for (let i = 0; i < transactionCount; i++) {
   })
 }
 
-export const getTransactions = (req: Request, res: Response) => {
+route.get('/', (req: Request, res: Response) => {
   return res.json({
     code: 20000,
     data: {
@@ -23,7 +23,7 @@ export const getTransactions = (req: Request, res: Response) => {
       items: transactionList
     }
   })
-}
+});
 
 
 export default route ;

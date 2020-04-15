@@ -34,6 +34,12 @@ export default (app:Express, http:any) => {
     next()
   })
 
+  app.use('/dev-api/articles',  articleRoute );
+  app.use('/dev-api/roles',   roleRoute );
+  app.use('/dev-api/routes',  routeRoute );
+  app.use('/dev-api/transactions', transactionRoute );
+  app.use('/dev-api/users', userRoute );
+
   // Catch 404 error
   app.use((req, res, next) => {
     const err = new Error('Not Found')
@@ -42,12 +48,5 @@ export default (app:Express, http:any) => {
       error: err
     })
   })
-
-  app.use('/dev-api/articles',articleRoute );
-  app.use('/dev-api/roles',roleRoute );
-  app.use('/dev-api/routes',routeRoute );
-  app.use('/dev-api/transaction',transactionRoute );
-  app.use('/dev-api/users',userRoute );
-  //app.use('roles', routeRoute);
 
 }

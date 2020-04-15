@@ -88,7 +88,7 @@ route.get('/', (req, res) => {
   })
 });
 
-route.get('/info',(req, res) => {
+route.post('/info',(req, res) => {
   // Mock data based on access token
   return res.json({
     code: 20000,
