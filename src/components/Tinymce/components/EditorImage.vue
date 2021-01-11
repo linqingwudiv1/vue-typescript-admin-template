@@ -5,7 +5,7 @@
       icon="el-icon-upload"
       size="mini"
       type="primary"
-      @click=" dialogVisible=true"
+      @click=" ble=true"
     >
       upload
     </el-button>

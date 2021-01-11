@@ -118,7 +118,7 @@
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3",
     "vue-cli-plugin-element": "^1.0.1",
-    "vue-cli-plugin-express": "^1.0.2",
+    "vue-cli-plugin-express": "~1.0.2",
     "vue-cli-plugin-style-resources-loader": "^0.1.4",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.1"
