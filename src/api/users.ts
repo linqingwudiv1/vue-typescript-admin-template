@@ -42,8 +42,8 @@ export const login = (data: any) =>
 
 export const logout = () =>
   request({
-    url: '/users/logout',
-    method: 'post'
+    url: '/users/logout' ,
+    method: 'post'       
   })
 
 export const register = (data: any) =>

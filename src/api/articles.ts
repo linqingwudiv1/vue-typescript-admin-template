@@ -50,7 +50,7 @@ export const updateArticle = (id: number, data: any) =>
 export const deleteArticle = (id: number) =>
   request({
     url: `/articles/${id}`,
-    method: 'delete'
+    method: 'delete',
   })
 
 export const getPageviews = (params: any) =>
