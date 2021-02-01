@@ -4,8 +4,9 @@ export const checkPermission = (value: string[]): boolean => {
   if (value && value instanceof Array && value.length > 0) {
     const roles = UserModule.roles
     const permissionRoles = value
+    console.log('checkPermission : ',permissionRoles);
     const hasPermission = roles.some(role => {
-      return permissionRoles.includes(role)
+      return permissionRoles.includes(role.name)
     })
     return hasPermission
   } else {

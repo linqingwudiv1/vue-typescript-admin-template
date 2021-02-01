@@ -6,12 +6,19 @@ import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
 
+
+export interface IRole{
+  key:number;
+  name:string;
+  displayName:string
+}
+
 export interface IUserState {
   token: string
   name: string
   avatar: string
   introduction: string
-  roles: string[]
+  roles: IRole[]
   email: string
 }
 
@@ -21,7 +28,7 @@ class User extends VuexModule implements IUserState {
   public name = ''
   public avatar = ''
   public introduction = ''
-  public roles: string[] = []
+  public roles: IRole[] = []
   public email = ''
 
   @Mutation
@@ -45,7 +52,7 @@ class User extends VuexModule implements IUserState {
   }
 
   @Mutation
-  private SET_ROLES(roles: string[]) {
+  private SET_ROLES(roles: IRole[]) {
     this.roles = roles
   }
 
@@ -59,8 +66,12 @@ class User extends VuexModule implements IUserState {
     let { username, password } = userInfo
     username = username.trim()
     const { data } = await login({ username, password })
-    setToken(data.accessToken)
-    this.SET_TOKEN(data.accessToken)
+    if (data &&data.state)
+    {
+      setToken(data.accessToken)
+      this.SET_TOKEN(data.accessToken)
+    }
+    return data;
   }
 
   @Action
@@ -79,27 +90,28 @@ class User extends VuexModule implements IUserState {
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
+
     const { roles, name, avatar, introduction, email } = data.user
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles must be a non-null array!')
     }
-    this.SET_ROLES(roles)
-    this.SET_NAME(name)
-    this.SET_AVATAR(avatar)
-    this.SET_INTRODUCTION(introduction)
-    this.SET_EMAIL(email)
+    this.SET_ROLES( roles );
+    this.SET_NAME(name);
+    this.SET_AVATAR( "https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png");
+    this.SET_INTRODUCTION(introduction);
+    this.SET_EMAIL(email);
   }
 
   @Action
-  public async ChangeRoles(role: string) {
+  public async ChangeRoles(role: IRole) {
     // Dynamically modify permissions
-    const token = role + '-token'
+    const token = role.key + '-token'
     this.SET_TOKEN(token)
     setToken(token)
     await this.GetUserInfo()
     resetRouter()
-    // Generate dynamic accessible routes based on roles
+    // Generate dynamic accessible routes based on roles  
     PermissionModule.GenerateRoutes(this.roles)
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)

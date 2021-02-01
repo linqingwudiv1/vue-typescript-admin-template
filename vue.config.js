@@ -6,7 +6,7 @@ const path = require('path')
 // For example, on Mac: sudo npm run / sudo yarn
 const devServerPort = 9527 // TODO: get this variable from setting.ts
 // const mockServerPort = 9528 // TODO: get this variable from setting.ts
-const devAPIServerPort = 3000
+const devAPIServerPort = 44311
 const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
       // change xxx-api/login => /mock-api/v1/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:${devAPIServerPort}/`,
+        target: `https://localhost:${devAPIServerPort}/api`,
         // target: `http://localhost:${mockServerPort}/mock-api/v1`,
         changeOrigin: true, // needed for virtual hosted sites
         ws: true // proxy websockets

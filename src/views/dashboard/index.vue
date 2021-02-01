@@ -25,9 +25,11 @@ export default class extends Vue {
   }
 
   created() {
-    if (!this.roles.includes('admin')) {
-      this.currentRole = 'editor-dashboard'
-    }
+    //console.log(this.roles, 'vue ');
+    this.currentRole = 'admin-dashboard';
+    //if (this.roles.findIndex( x=> x.key == 1) <= -1) {
+    //  this.currentRole = 'editor-dashboard'
+    //}
   }
 }
 </script>

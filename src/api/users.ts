@@ -52,3 +52,16 @@ export const register = (data: any) =>
     method: 'post',
     data
   })
+
+
+/**
+ * 获取用户的
+ * @param params 
+ */
+export const getUserRoute = ()=>
+{
+  return request({
+    url: '/users/getRoutes',
+    method: 'get'
+  });
+}

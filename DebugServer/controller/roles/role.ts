@@ -7,19 +7,19 @@ const route = Router();
 const routes = [...constantRoutes, ...asyncRoutes]
 const roles: IRoleData[] = [
   {
-    key: 'admin',
+    key: '1',
     name: 'admin',
     description: 'Super Administrator. Have access to view all pages.',
     routes: routes
   },
   {
-    key: 'editor',
+    key: '2',
     name: 'editor',
     description: 'Normal Editor. Can see all pages except permission page',
     routes: routes.filter(i => i.path !== '/permission') // Just a mock
   },
   {
-    key: 'visitor',
+    key: '3',
     name: 'visitor',
     description: 'Just a visitor. Can only see the home page and the document page',
     routes: [{

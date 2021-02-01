@@ -2,17 +2,26 @@ import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-dec
 import { RouteConfig } from 'vue-router'
 import { asyncRoutes, constantRoutes } from '@/router'
 import store from '@/store'
+import { IRole } from './user'
 
-const hasPermission = (roles: string[], route: RouteConfig) => {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
-  } else {
-    return true
+/**
+ * 
+ * @param roles 
+ * @param route 
+ */
+const hasPermission = (roles: IRole[], route: RouteConfig) => {
+  if (route.meta && route.meta.roles) 
+  {
+    return roles.some(role => route.meta.roles.includes(role.key));
+  } 
+  else 
+  {
+    return true;
   }
 }
 
-export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
-  const res: RouteConfig[] = []
+export const filterAsyncRoutes = (routes: RouteConfig[], roles: IRole[]) => {
+  const res: RouteConfig[] = [];
   routes.forEach(route => {
     const r = { ...route }
     if (hasPermission(roles, r)) {
@@ -22,9 +31,8 @@ export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
       res.push(r)
     }
   })
-  return res
+  return res;
 }
-
 export interface IPermissionState {
   routes: RouteConfig[]
   dynamicRoutes: RouteConfig[]
@@ -42,14 +50,18 @@ class Permission extends VuexModule implements IPermissionState {
   }
 
   @Action
-  public GenerateRoutes(roles: string[]) {
-    let accessedRoutes
-    if (roles.includes('admin')) {
+  public GenerateRoutes(roles: IRole[]) {
+    let accessedRoutes;
+
+    console.log('GenerateRoutes', roles, '\r\n', asyncRoutes );
+    
+    if (true ) {
       accessedRoutes = asyncRoutes
     } else {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
-    this.SET_ROUTES(accessedRoutes)
+    
+    //this.SET_ROUTES(accessedRoutes)
   }
 }
 
