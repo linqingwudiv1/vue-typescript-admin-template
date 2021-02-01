@@ -44,7 +44,6 @@ route.get('/', (req: Request, res: Response) => {
     }
   
     const pageList = mockList.filter((_, index) => index < limit * page && index >= limit * (page - 1))
-  
     return res.json({
       code: 20000,
       data: {
@@ -53,7 +52,6 @@ route.get('/', (req: Request, res: Response) => {
       }
     })
   });
-
 
 route.get('/:id',  (req: Request, res: Response) => {
     const { id } = req.params

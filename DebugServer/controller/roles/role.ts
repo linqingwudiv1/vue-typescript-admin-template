@@ -43,7 +43,7 @@ route.get('/', (req, res) => {
       total: roles.length,
       items: roles
     }
-  })
+  })  
 });
 
 route.post('/', (req, res) => {
@@ -54,6 +54,7 @@ route.post('/', (req, res) => {
     }
   })
 });
+
 
 route.put('/',  (req, res) => {
   const { role } = req.body

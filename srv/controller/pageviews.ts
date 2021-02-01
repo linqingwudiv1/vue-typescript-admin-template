@@ -6,10 +6,10 @@ route.get('/', (req: Request, res: Response) => {
     code: 20000,
     data: {
       pageviews: [
-        { key: 'PC', pageviews: 1024 },
-        { key: 'Mobile', pageviews: 1024 },
-        { key: 'iOS', pageviews: 1024 },
-        { key: 'Android', pageviews: 1024 }
+        { key: 'PC',      pageviews: 1024     },
+        { key: 'Mobile',  pageviews: 1024     },
+        { key: 'iOS',     pageviews: 1024     },
+        { key: 'Android', pageviews: 1024     },      
       ]
     }
   })

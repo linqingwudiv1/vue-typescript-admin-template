@@ -254,6 +254,7 @@ export default class extends Vue {
     this.role = cloneDeep(scope.row)
     this.$nextTick(() => {
       const routes = this.flattenRoutes(this.reshapeRoutes(this.role.routes))
+      // console.log(routes)
       const treeData = this.generateTreeData(routes)
       const treeDataKeys = treeData.map(t => t.path);
       (this.$refs.tree as Tree).setCheckedKeys(treeDataKeys)
