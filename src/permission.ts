@@ -8,6 +8,9 @@ import { PermissionModule } from '@/store/modules/permission'
 import i18n from '@/lang' // Internationalization
 import settings from './settings'
 
+import Layout from '@/layout/index.vue'
+
+
 NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login', '/auth-redirect']
@@ -21,6 +24,9 @@ const getPageTitle = (key: string) => {
   return `${settings.title}`
 }
 
+/**
+ * 
+ */
 router.beforeEach(async(to: Route, _: Route, next: any) => {
   // Start progress bar
   NProgress.start()
@@ -35,11 +41,11 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
       // Check whether the user has obtained his permission roles
       if (UserModule.roles.length === 0) {
         try {
-          // Note: roles must be a object array! such as: ['admin'] or ['developer', 'editor']
+          // Note: roles must be a object array! such as: [{key : 1 , name : 'admin'}] or [{key : 2 , name : 'developer'},{key : 2 , name : 'test'}]
           await UserModule.GetUserInfo()
-          const roles = UserModule.roles
+          const roles = UserModule.roles;
           // Generate accessible routes map based on role
-          PermissionModule.GenerateRoutes(roles)
+          await PermissionModule.GenerateRoutes(roles)
           // Dynamically add accessible routes
           router.addRoutes(PermissionModule.dynamicRoutes)
           // Hack: ensure addRoutes is complete

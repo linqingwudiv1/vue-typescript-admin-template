@@ -1,9 +1,12 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
 import { RouteConfig } from 'vue-router'
-import { asyncRoutes, constantRoutes } from '@/router'
+import router, { asyncRoutes, constantRoutes } from '@/router'
 import store from '@/store'
 import { IRole } from './user'
 
+import Layout from '@/layout/index.vue'
+import { getUserRoute } from '@/api/users'
+import { loadView, loadViewToMap } from '@/utils/route'
 /**
  * 
  * @param roles 
@@ -20,6 +23,11 @@ const hasPermission = (roles: IRole[], route: RouteConfig) => {
   }
 }
 
+/**
+ * 
+ * @param routes 
+ * @param roles 
+ */
 export const filterAsyncRoutes = (routes: RouteConfig[], roles: IRole[]) => {
   const res: RouteConfig[] = [];
   routes.forEach(route => {
@@ -33,11 +41,47 @@ export const filterAsyncRoutes = (routes: RouteConfig[], roles: IRole[]) => {
   })
   return res;
 }
+
+/**
+ * 
+ * @param routes 
+ */
+export const filterUserRoutes = (routes:Array<any>):RouteConfig[] => 
+{
+  //const ret_route: RouteConfig[] = [];
+
+  let ret_route = routes.map(route => {
+      let r:RouteConfig = {
+        path      : route.path,
+        name      : route.name,
+        redirect  : route.redirect,
+        component : loadViewToMap(route.component),
+        meta: {
+          id : route.id,
+          title : route.meta.title,
+          activeMenu: route.meta.activeMenu,
+          hidden : route.meta.hidden,
+          icon   : route.meta.icon,
+          noCache : route.meta.noCache,
+          affix : route.meta.affix,
+          alwaysShow: route.meta.affix
+        }
+      };
+      if (route.children != null )
+      {          
+        r.children  = filterUserRoutes(route.children);
+      }
+
+      return r;
+    });
+
+  return ret_route;
+}
+
 export interface IPermissionState {
   routes: RouteConfig[]
   dynamicRoutes: RouteConfig[]
 }
-
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
   public routes: RouteConfig[] = []
@@ -45,23 +89,57 @@ class Permission extends VuexModule implements IPermissionState {
 
   @Mutation
   private SET_ROUTES(routes: RouteConfig[]) {
-    this.routes = constantRoutes.concat(routes)
-    this.dynamicRoutes = routes
+    this.routes = constantRoutes.concat(routes);
+    this.dynamicRoutes = routes; 
   }
 
-  @Action
-  public GenerateRoutes(roles: IRole[]) {
-    let accessedRoutes;
 
-    console.log('GenerateRoutes', roles, '\r\n', asyncRoutes );
+  
+
+  @Action
+  public async GenerateRoutes(roles: IRole[]) {
+    let accessedRoutes:RouteConfig[] = [];
     
-    if (true ) {
-      accessedRoutes = asyncRoutes
-    } else {
+    let { data } = await getUserRoute();
+    // let { data } = await getUserRoute();
+
+    if ( (typeof data) != "string" )
+    {
+      
+      let user_route =  filterUserRoutes(data);
+      console.log(user_route);
+      accessedRoutes = user_route;
+/*
+      let i = 1;
+      let data1 = data.map((x:any)=> 
+      {
+        //console.log(x.component, () =>  loadViewToMap(x.component));
+        return {
+          path: x.path,
+          component: loadViewToMap(x.component),
+          meta:{
+            icon:x.meta.icon,
+            title: x.meta.title ?? ''
+          }
+        };
+      });
+      
+      console.log(data1);
+      accessedRoutes = data1; *///[data1[0], data1[1]]; 
+    }
+    //accessedRoutes = data1;
+
+    //判断是否有权限
+    if ( true ) 
+    {
+      //accessedRoutes = asyncRoutes;
+    } 
+    else 
+    {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
     
-    //this.SET_ROUTES(accessedRoutes)
+    this.SET_ROUTES(accessedRoutes)
   }
 }
 

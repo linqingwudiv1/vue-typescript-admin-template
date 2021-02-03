@@ -1,5 +1,5 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login, logout, getUserInfo } from '@/api/users'
+import { login, logout, getUserInfo, getUserRoute } from '@/api/users'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
@@ -98,7 +98,7 @@ class User extends VuexModule implements IUserState {
     }
     this.SET_ROLES( roles );
     this.SET_NAME(name);
-    this.SET_AVATAR( "https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png");
+    this.SET_AVATAR( avatar ?? "https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png");
     this.SET_INTRODUCTION(introduction);
     this.SET_EMAIL(email);
   }
@@ -112,9 +112,13 @@ class User extends VuexModule implements IUserState {
     await this.GetUserInfo()
     resetRouter()
     // Generate dynamic accessible routes based on roles  
-    PermissionModule.GenerateRoutes(this.roles)
+    await PermissionModule.GenerateRoutes(this.roles)
+
+    
+
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)
+
     // Reset visited views and cached views
     TagsViewModule.delAllViews()
   }

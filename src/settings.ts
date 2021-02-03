@@ -35,7 +35,7 @@ interface ISettings {
 
 // You can customize below settings :)
 const settings: ISettings = {
-  title: 'Vue Typescript Admin',
+  title: 'Admin 管理平台',
   showSettings: true,
   showTagsView: true,
   fixedHeader: false,

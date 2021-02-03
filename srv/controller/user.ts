@@ -1,5 +1,7 @@
 import faker from 'faker'
 import { Response, Request, Router } from 'express'
+import { readFileSync } from 'fs';
+import path,{ join,resolve as PathResolve } from 'path';
 
 const route = Router();
 
@@ -114,6 +116,23 @@ route.post('/info', (req: Request, res: Response) => {
   })
 });
 
+
+/**
+ * 
+ */
+route.get('/getRoutes', (req, res) => {
+  let jsonpath = join(__dirname, 'userdata.json');
+  const json = readFileSync(jsonpath, 'utf-8') ;
+  jsonpath = PathResolve(jsonpath);
+  return res.json({
+    //data:__dirname,
+    data :jsonpath.replace("\\\\", '/'),
+    json,
+    code: 20000
+  })
+});
+
+
 /**
  * getUserByName
  */
@@ -166,6 +185,8 @@ route.delete('/:username', (req: Request, res: Response) => {
     code: 20000
   })
 });
+
+
 
 
 export default route;

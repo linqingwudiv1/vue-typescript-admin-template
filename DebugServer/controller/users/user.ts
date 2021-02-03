@@ -143,4 +143,16 @@ route.delete('/', (req, res) => {
 
 
 
+const json = require( './userdata.json')
+console.log(json);
+/**
+ * 
+ */
+route.get('/test', (req, res) => {
+  return res.json({
+    code: 20000
+  })
+});
+
+
 export default route ;

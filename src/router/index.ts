@@ -9,9 +9,11 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
+import { resolve } from 'path'
+import { Component, DefaultComputed, DefaultData, DefaultMethods } from 'vue/types/options'
+import { loadViewToMap } from '@/utils/route'
 
 Vue.use(Router)
-
 /*
   Note: sub-menu only appear when children.length>=1
   Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -35,6 +37,10 @@ Vue.use(Router)
   }
 */
 
+
+
+
+
 /**
   ConstantRoutes
   a base page that does not have permission requirements
@@ -43,12 +49,13 @@ Vue.use(Router)
 export const constantRoutes: RouteConfig[] = [
   {
     path: '/redirect',
-    component: Layout,
+    
+    component:  Layout,
     meta: { hidden: true },
     children: [
       {
         path: '/redirect/:path(.*)',
-        component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
+        component:  () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
       }
     ]
   },
@@ -74,7 +81,7 @@ export const constantRoutes: RouteConfig[] = [
   },
   {
     path: '/',
-    component: Layout,
+    component:  Layout,
     redirect: '/dashboard',
     children: [
       {
@@ -91,7 +98,7 @@ export const constantRoutes: RouteConfig[] = [
   },
   // {
   //   path: '/documentation',
-  //   component: Layout,
+  //   component:  Layout,
   //   children: [
   //     {
   //       path: 'index',
@@ -103,7 +110,7 @@ export const constantRoutes: RouteConfig[] = [
   // },
   {
     path: '/guide',
-    component: Layout,
+    component:  Layout,
     redirect: '/guide/index',
     children: [
       {
@@ -120,7 +127,7 @@ export const constantRoutes: RouteConfig[] = [
   },
   {
     path: '/profile',
-    component: Layout,
+    component:  Layout,
     redirect: '/profile/index',
     meta: { hidden: true },
     children: [
@@ -136,13 +143,13 @@ export const constantRoutes: RouteConfig[] = [
       }
     ]
   }
-]
+];
 
 /**
- * asyncRoutes
+ * examRoutes
  * the routes that need to be dynamically loaded based on user roles
 */
-export const asyncRoutes: RouteConfig[] = [
+export const examRoutes: RouteConfig[] = [
   {
     path: '/permission',
     component: Layout,
@@ -156,7 +163,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'page',
-        component: () => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
+        component:  loadViewToMap('view/permission/page.vue'), // () => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
         name: 'PagePermission',
         meta: {
           title: 'pagePermission',
@@ -165,7 +172,7 @@ export const asyncRoutes: RouteConfig[] = [
       },
       {
         path: 'directive',
-        component: () => import(/* webpackChunkName: "permission-directive" */ '@/views/permission/directive.vue'),
+        component: loadViewToMap('view/permission/directive.vue'), //() =>  import(/* webpackChunkName: "permission-directive" */ '@/views/permission/directive.vue'),
         name: 'DirectivePermission',
         meta: {
           title: 'directivePermission'
@@ -174,7 +181,7 @@ export const asyncRoutes: RouteConfig[] = [
       },
       {
         path: 'role',
-        component: () => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
+        component: loadViewToMap('view/permission/role.vue'), //() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
         name: 'RolePermission',
         meta: {
           title: 'rolePermission',
@@ -189,7 +196,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
+        component: loadViewToMap('view/icons/index.vue'), // () => import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
         name: 'Icons',
         meta: {
           title: 'icons',
@@ -206,7 +213,7 @@ export const asyncRoutes: RouteConfig[] = [
   tableRouter,
   {
     path: '/example',
-    component: Layout,
+    component:  Layout,
     redirect: '/example/list',
     meta: {
       title: 'example',
@@ -215,7 +222,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'create',
-        component: () => import(/* webpackChunkName: "example-create" */ '@/views/example/create.vue'),
+        component: loadViewToMap('view/example/create.vue'),//() => import(/* webpackChunkName: "example-create" */ '@/views/example/create.vue'),
         name: 'CreateArticle',
         meta: {
           title: 'createArticle',
@@ -224,7 +231,7 @@ export const asyncRoutes: RouteConfig[] = [
       },
       {
         path: 'edit/:id(\\d+)',
-        component: () => import(/* webpackChunkName: "example-edit" */ '@/views/example/edit.vue'),
+        component: loadViewToMap('view/example/edit.vue'), // () => import(/* webpackChunkName: "example-edit" */ '@/views/example/edit.vue'),
         name: 'EditArticle',
         meta: {
           title: 'editArticle',
@@ -235,7 +242,7 @@ export const asyncRoutes: RouteConfig[] = [
       },
       {
         path: 'list',
-        component: () => import(/* webpackChunkName: "example-list" */ '@/views/example/list.vue'),
+        component: loadViewToMap('view/example/list.vue'),// () => import(/* webpackChunkName: "example-list" */ '@/views/example/list.vue'),
         name: 'ArticleList',
         meta: {
           title: 'articleList',
@@ -246,11 +253,11 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/tab',
-    component: Layout,
+    component:  Layout,
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "tab" */ '@/views/tab/index.vue'),
+        component: loadViewToMap('view/tab/index.vue'), //() => import(/* webpackChunkName: "tab" */ '@/views/tab/index.vue'),
         name: 'Tab',
         meta: {
           title: 'tab',
@@ -261,7 +268,7 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/error',
-    component: Layout,
+    component:  Layout,
     redirect: 'noredirect',
     meta: {
       title: 'errorPages',
@@ -270,7 +277,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: '401',
-        component: () => import(/* webpackChunkName: "error-page-401" */ '@/views/error-page/401.vue'),
+        component: loadViewToMap('view/error-page/401.vue'),//() => import(/* webpackChunkName: "error-page-401" */ '@/views/error-page/401.vue'),
         name: 'Page401',
         meta: {
           title: 'page401',
@@ -279,7 +286,7 @@ export const asyncRoutes: RouteConfig[] = [
       },
       {
         path: '404',
-        component: () => import(/* webpackChunkName: "error-page-404" */ '@/views/error-page/404.vue'),
+        component:  loadViewToMap('view/error-page/404.vue'), // () => import(/* webpackChunkName: "error-page-404" */ '@/views/error-page/404.vue'),
         name: 'Page404',
         meta: {
           title: 'page404',
@@ -290,12 +297,12 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/error-log',
-    component: Layout,
+    component:  Layout,
     redirect: 'noredirect',
     children: [
       {
         path: 'log',
-        component: () => import(/* webpackChunkName: "error-log" */ '@/views/error-log/index.vue'),
+        component: loadViewToMap('view/error-log/index.vue'),// () => import(/* webpackChunkName: "error-log" */ '@/views/error-log/index.vue'),
         name: 'ErrorLog',
         meta: {
           title: 'errorLog',
@@ -306,7 +313,7 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/excel',
-    component: Layout,
+    component:  Layout,
     redirect: '/excel/export-excel',
     meta: {
       title: 'excel',
@@ -315,25 +322,25 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'export-excel',
-        component: () => import(/* webpackChunkName: "export-excel" */ '@/views/excel/export-excel.vue'),
+        component: loadViewToMap('view/excel/export-excel.vue'),// () => import(/* webpackChunkName: "export-excel" */ '@/views/excel/export-excel.vue'),
         name: 'ExportExcel',
         meta: { title: 'exportExcel' }
       },
       {
         path: 'export-selected-excel',
-        component: () => import(/* webpackChunkName: "select-excel" */ '@/views/excel/select-excel.vue'),
+        component: loadViewToMap('view/excel/select-excel.vue'),// () => import(/* webpackChunkName: "select-excel" */ '@/views/excel/select-excel.vue'),
         name: 'SelectExcel',
         meta: { title: 'selectExcel' }
       },
       {
         path: 'export-merge-header',
-        component: () => import(/* webpackChunkName: "merge-header" */ '@/views/excel/merge-header.vue'),
+        component: loadViewToMap('view/excel/merge-header.vue'),// () => import(/* webpackChunkName: "merge-header" */ '@/views/excel/merge-header.vue'),
         name: 'MergeHeader',
         meta: { title: 'mergeHeader' }
       },
       {
         path: 'upload-excel',
-        component: () => import(/* webpackChunkName: "upload-excel" */ '@/views/excel/upload-excel.vue'),
+        component:  loadViewToMap('view/excel/upload-excel.vue'),// () => import(/* webpackChunkName: "upload-excel" */ '@/views/excel/upload-excel.vue'),
         name: 'UploadExcel',
         meta: { title: 'uploadExcel' }
       }
@@ -341,7 +348,7 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/zip',
-    component: Layout,
+    component:  Layout,
     redirect: '/zip/download',
     meta: {
       title: 'zip',
@@ -351,7 +358,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'download',
-        component: () => import(/* webpackChunkName: "zip" */ '@/views/zip/index.vue'),
+        component: loadViewToMap('view/zip/index.vue'), // () => import(/* webpackChunkName: "zip" */ '@/views/zip/index.vue'),
         name: 'ExportZip',
         meta: { title: 'exportZip' }
       }
@@ -359,12 +366,12 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/pdf',
-    component: Layout,
+    component:  Layout,
     redirect: '/pdf/index',
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "pdf" */ '@/views/pdf/index.vue'),
+        component: loadViewToMap('view/pdf/index.vue'),//() => import(/* webpackChunkName: "pdf" */ '@/views/pdf/index.vue'),
         name: 'PDF',
         meta: {
           title: 'pdf',
@@ -375,17 +382,17 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/pdf-download-example',
-    component: () => import(/* webpackChunkName: "pdf-download-example" */ '@/views/pdf/download.vue'),
+    component: loadViewToMap('view/pdf/download.vue'),// () => import(/* webpackChunkName: "pdf-download-example" */ '@/views/pdf/download.vue'),
     meta: { hidden: true }
   },
   {
     path: '/theme',
-    component: Layout,
+    component:  Layout,
     redirect: 'noredirect',
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "theme" */ '@/views/theme/index.vue'),
+        component: loadViewToMap('view/theme/index.vue'),//() => import(/* webpackChunkName: "theme" */ '@/views/theme/index.vue'),
         name: 'Theme',
         meta: {
           title: 'theme',
@@ -396,12 +403,12 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/clipboard',
-    component: Layout,
+    component:  Layout,
     redirect: 'noredirect',
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "clipboard" */ '@/views/clipboard/index.vue'),
+        component: loadViewToMap('view/clipboard/index.vue'),//() => import(/* webpackChunkName: "clipboard" */ '@/views/clipboard/index.vue'),
         name: 'Clipboard',
         meta: {
           title: 'clipboard',
@@ -412,11 +419,11 @@ export const asyncRoutes: RouteConfig[] = [
   },
   {
     path: '/i18n',
-    component: Layout,
+    component:  Layout,
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "i18n-demo" */ '@/views/i18n-demo/index.vue'),
+        component: loadViewToMap('view/i18n-demo/index.vue'),//() => import(/* webpackChunkName: "i18n-demo" */ '@/views/i18n-demo/index.vue'),
         name: 'I18n',
         meta: {
           title: 'i18n',
@@ -437,10 +444,17 @@ export const asyncRoutes: RouteConfig[] = [
     redirect: '/404',
     meta: { hidden: true }
   }
-]
+];
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+*/
+export const asyncRoutes: RouteConfig[] = [];
+
 
 const createRouter = () => new Router({
-  // mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
+  mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
       return savedPosition
