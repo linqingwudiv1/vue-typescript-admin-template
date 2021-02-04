@@ -96,7 +96,6 @@ class Permission extends VuexModule implements IPermissionState {
     
     _routes = _routes.concat(footerRoute);
     this.routes = constantRoutes.concat( _routes );
-    console.log(_routes);
     this.dynamicRoutes = _routes;  
   }
 
@@ -106,11 +105,13 @@ class Permission extends VuexModule implements IPermissionState {
     
     let { data } = await getUserRoute();
 
+    
     if ( (typeof data) != "string" )
     {
       let user_route =  filterUserRoutes(data);
     }
 
+    accessedRoutes = asyncRoutes;
     /*
     if ( true ) 
     {

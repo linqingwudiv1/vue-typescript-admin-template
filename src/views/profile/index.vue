@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
+import { IRole, UserModule } from '@/store/modules/user'
 import Account from './components/Account.vue'
 import Activity from './components/Activity.vue'
 import Timeline from './components/Timeline.vue'
@@ -100,7 +100,7 @@ export default class extends Vue {
       name: this.name,
       email: this.email,
       avatar: this.avatar,
-      roles: this.roles.join(' | ')
+      roles: this.roles.map(x => x.displayName).join('|')
     }
   }
 }

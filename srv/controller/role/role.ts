@@ -36,15 +36,11 @@ const roles: any[] = [
   }
 ]
 
-
-
 route.get('/', (req: Request, res: Response) => {
     return res.json({
       code: 20000,
-      data: {
-        total: roles.length,
-        items: roles
-      }
+      data:  roles,
+      total: roles.length
     })
   });
 
@@ -74,6 +70,5 @@ route.delete('/:role',  (req: Request, res: Response) => {
     code: 20000,
   })
 });
-
 
 export default route;

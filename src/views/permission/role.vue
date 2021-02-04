@@ -176,7 +176,7 @@ export default class extends Vue {
 
   private async getRoles() {
     const { data } = await getRoles({ /* Your params here */ })
-    this.rolesList = data.items
+    this.rolesList = data
   }
 
   private generateTreeData(routes: RouteConfig[]) {

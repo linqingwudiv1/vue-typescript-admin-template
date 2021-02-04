@@ -26,7 +26,7 @@ const userList: any[] = [
     introduction: 'I am an editor',
     email: 'editor@test.com',
     phone: '1234567890',
-    roles: [ { key: 1, name :'developer', displayName:'开发人员'} ],
+    roles: [ {key: 1, name :'developer', displayName:'开发人员'} ],
   }
 ]
 const userCount = 100
