@@ -49,4 +49,6 @@ const bizAsncRoute:RouteConfig[] =
           }
         ]
       }
-]
+];
+
+export default bizAsncRoute;

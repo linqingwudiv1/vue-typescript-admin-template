@@ -12,6 +12,7 @@ import nestedRouter from './modules/nested'
 import { resolve } from 'path'
 import { Component, DefaultComputed, DefaultData, DefaultMethods } from 'vue/types/options'
 import { loadViewToMap } from '@/utils/route'
+import bizAsncRouter from './modules/bizAsync'
 
 Vue.use(Router)
 /*
@@ -401,7 +402,7 @@ export const footerRoute:RouteConfig[] =
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
 */
-export const asyncRoutes: RouteConfig[] = [];
+export const asyncRoutes: RouteConfig[] = bizAsncRouter;
 
 
 const createRouter = () => new Router({

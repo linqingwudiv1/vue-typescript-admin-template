@@ -5,6 +5,8 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
+import { isEmptyOrNull } from '@/utils/validate'
+import faker from 'faker'
 
 
 export interface IRole{
@@ -100,7 +102,7 @@ class User extends VuexModule implements IUserState {
     }
     this.SET_ROLES( roles );
     this.SET_NAME(name);
-    this.SET_AVATAR( avatar ?? "https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png");
+    this.SET_AVATAR( avatar);
     this.SET_INTRODUCTION(introduction);
     this.SET_EMAIL(email);
   }
@@ -125,12 +127,13 @@ class User extends VuexModule implements IUserState {
     TagsViewModule.delAllViews()
   }
 
-  @Action
+  @Action({ rawError: true })
   public async LogOut() {
     if (this.token === '') {
       throw Error('LogOut: token is undefined!')
     }
-    await logout()
+    
+    await logout();
     removeToken()
     resetRouter()
 

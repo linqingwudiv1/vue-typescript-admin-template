@@ -101,9 +101,10 @@ export default class extends Vue {
     AppModule.ToggleSideBar(false)
   }
 
-  private async logout() {
-    await UserModule.LogOut()
-    this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+  private logout() {
+    UserModule.LogOut().then(() => {
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    })
   }
 }
 </script>
