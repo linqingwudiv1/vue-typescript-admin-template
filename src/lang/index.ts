@@ -16,6 +16,7 @@ import zhLocale from './zh'
 import esLocale from './es'
 import jaLocale from './ja'
 import koLocale from './ko'
+import settings from '@/settings'
 
 Vue.use(VueI18n)
 
@@ -57,7 +58,7 @@ export const getLocale = () => {
   }
 
   // Default language is english
-  return 'en'
+  return settings.language //'en'
 }
 
 const i18n = new VueI18n({

@@ -31,6 +31,11 @@ interface ISettings {
    * Port number for webpack-dev-server
    */
   devServerPort: number
+
+  /**
+   * default language from i18n
+   */
+  language:string
 }
 
 // You can customize below settings :)
@@ -42,7 +47,8 @@ const settings: ISettings = {
   showSidebarLogo: false,
   errorLog: ['production'],
   sidebarTextTheme: true,
-  devServerPort: 9527
+  devServerPort: 9527,
+  language: 'zh-cn'
 }
 
 export default settings
