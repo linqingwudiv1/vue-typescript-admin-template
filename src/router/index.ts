@@ -3,7 +3,7 @@ import Router, { RouteConfig } from 'vue-router'
 
 /* Layout */
 import Layout from '@/layout/index.vue'
-
+import Default from '@/layout/default.vue'
 /* Router modules */
 import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
@@ -49,13 +49,13 @@ Vue.use(Router)
 export const constantRoutes: RouteConfig[] = [
   {
     path: '/redirect',
-    
-    component:  Layout,
+
+    component: Layout,
     meta: { hidden: true },
     children: [
       {
         path: '/redirect/:path(.*)',
-        component:  () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
+        component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
       }
     ]
   },
@@ -81,7 +81,7 @@ export const constantRoutes: RouteConfig[] = [
   },
   {
     path: '/',
-    component:  Layout,
+    component: Layout,
     redirect: '/dashboard',
     children: [
       {
@@ -96,21 +96,9 @@ export const constantRoutes: RouteConfig[] = [
       }
     ]
   },
-  // {
-  //   path: '/documentation',
-  //   component:  Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import(/* webpackChunkName: "documentation" */ '@/views/documentation/index.vue'),
-  //       name: 'Documentation',
-  //       meta: { title: 'documentation', icon: 'documentation', affix: true }
-  //     }
-  //   ]
-  // },
   {
     path: '/guide',
-    component:  Layout,
+    component: Layout,
     redirect: '/guide/index',
     children: [
       {
@@ -126,14 +114,14 @@ export const constantRoutes: RouteConfig[] = [
     ]
   },
   {
-    path: '/profile',
-    component:  Layout,
+    path: '/profile', // 个人中心
+    component: Layout,
     redirect: '/profile/index',
     meta: { hidden: true },
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "profile" */ '@/views/profile/index.vue'),
+        component: () => import(/* webpackChunkName: "profile" */ '@/views/developer/profile/index.vue'),
         name: 'Profile',
         meta: {
           title: 'profile',
@@ -145,305 +133,268 @@ export const constantRoutes: RouteConfig[] = [
   }
 ];
 
-/**
- * examRoutes
- * the routes that need to be dynamically loaded based on user roles
-*/
-export const examRoutes: RouteConfig[] = [
+export const developRoutes: RouteConfig[] = [
   {
-    path: '/permission',
+    path: '/developer',
     component: Layout,
-    redirect: '/permission/directive',
     meta: {
-      title: 'permission',
-      icon: 'lock',
-      roles: [1, 2], // you can set roles in root nav
-      alwaysShow: true // will always show the root menu
+      title: 'developer',
+      icon: 'example',
+      alwaysShow: true
     },
     children: [
       {
-        path: 'page',
-        component:  loadViewToMap('view/permission/page.vue'), // () => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
-        name: 'PagePermission',
-        meta: {
-          title: 'pagePermission',
-          roles: [1] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'directive',
-        component: loadViewToMap('view/permission/directive.vue'), //() =>  import(/* webpackChunkName: "permission-directive" */ '@/views/permission/directive.vue'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'directivePermission'
-          // if do not set roles, means: this page does not require permission
-        }
-      },
-      {
-        path: 'role',
-        component: loadViewToMap('view/permission/role.vue'), //() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
-        name: 'RolePermission',
-        meta: {
-          title: 'rolePermission',
-          roles: [1]
-        }
-      }
-    ]
-  },
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: loadViewToMap('view/icons/index.vue'), // () => import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
-        name: 'Icons',
+        path: 'icon',
+        component: loadViewToMap('views/developer/icons/index.vue'),
         meta: {
           title: 'icons',
           icon: 'icon',
           noCache: true
         }
-      }
-    ]
-  },
-  /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
-  nestedRouter,
-  tableRouter,
-  {
-    path: '/example',
-    component:  Layout,
-    redirect: '/example/list',
-    meta: {
-      title: 'example',
-      icon: 'example'
-    },
-    children: [
+      },
+      componentsRouter,
+      chartsRouter,
+      nestedRouter,
+      tableRouter,
       {
-        path: 'create',
-        component: loadViewToMap('view/example/create.vue'),//() => import(/* webpackChunkName: "example-create" */ '@/views/example/create.vue'),
-        name: 'CreateArticle',
+        path: 'excel',
+        component: Default,
+        redirect: '/excel/export-excel',
         meta: {
-          title: 'createArticle',
-          icon: 'edit'
+          title: 'excel',
+          icon: 'excel'
+        },
+        children: [
+          {
+            path: 'export-excel',
+            component: loadViewToMap('views/developer/excel/export-excel.vue'),// () => import(/* webpackChunkName: "export-excel" */ '@/views/excel/export-excel.vue'),
+            name: 'ExportExcel',
+            meta: { title: 'exportExcel' }
+          },
+          {
+            path: 'export-selected-excel',
+            component: loadViewToMap('views/developer/excel/select-excel.vue'),// () => import(/* webpackChunkName: "select-excel" */ '@/views/excel/select-excel.vue'),
+            name: 'SelectExcel',
+            meta: { title: 'selectExcel' }
+          },
+          {
+            path: 'export-merge-header',
+            component: loadViewToMap('views/developer/excel/merge-header.vue'),// () => import(/* webpackChunkName: "merge-header" */ '@/views/excel/merge-header.vue'),
+            name: 'MergeHeader',
+            meta: { title: 'mergeHeader' }
+          },
+          {
+            path: 'upload-excel',
+            component: loadViewToMap('views/developer/excel/upload-excel.vue'),// () => import(/* webpackChunkName: "upload-excel" */ '@/views/excel/upload-excel.vue'),
+            name: 'UploadExcel',
+            meta: { title: 'uploadExcel' }
+          }
+        ]
+      },
+      {
+        path: 'zip',
+        component: Default,
+        redirect: '/zip/download',
+        meta: {
+          title: 'zip',
+          icon: 'zip',
+          alwaysShow: true // will always show the root menu
+        },
+        children: [
+          {
+            path: 'download',
+            component: loadViewToMap('views/developer/zip/index.vue'), // () => import(/* webpackChunkName: "zip" */ '@/views/zip/index.vue'),
+            name: 'ExportZip',
+            meta: { title: 'exportZip' }
+          }
+        ]
+      },
+      {
+        path: 'example',
+        component: Default,
+        redirect: '/example/list',
+        meta: {
+          title: 'example',
+          icon: 'example'
+        },
+        children: [
+          {
+            path: 'create',
+            component: loadViewToMap('views/developer/example/create.vue'),//() => import(/* webpackChunkName: "example-create" */ '@/views/example/create.vue'),
+            name: 'CreateArticle',
+            meta: {
+              title: 'createArticle',
+              icon: 'edit'
+            }
+          },
+          {
+            path: 'edit/:id(\\d+)',
+            component: loadViewToMap('views/developer/example/edit.vue'), // () => import(/* webpackChunkName: "example-edit" */ '@/views/example/edit.vue'),
+            name: 'EditArticle',
+            meta: {
+              title: 'editArticle',
+              noCache: true,
+              activeMenu: '/example/list',
+              hidden: true
+            }
+          },
+          {
+            path: 'list',
+            component: loadViewToMap('views/developer/example/list.vue'),// () => import(/* webpackChunkName: "example-list" */ '@/views/example/list.vue'),
+            name: 'ArticleList',
+            meta: {
+              title: 'articleList',
+              icon: 'list'
+            }
+          }
+        ]
+      },
+      {
+        path: 'tab',
+        component: Default,
+        children: [
+          {
+            path: 'index',
+            component: loadViewToMap('views/developer/tab/index.vue'), //() => import(/* webpackChunkName: "tab" */ '@/views/tab/index.vue'),
+            name: 'Tab',
+            meta: {
+              title: 'tab',
+              icon: 'tab'
+            }
+          }
+        ]
+      },
+      {
+        path: 'pdf',
+        component: Default,
+        redirect: '/pdf/index',
+        children: [
+          {
+            path: 'index',
+            component: loadViewToMap('views/developer/pdf/index.vue'),//() => import(/* webpackChunkName: "pdf" */ '@/views/pdf/index.vue'),
+            name: 'PDF',
+            meta: {
+              title: 'pdf',
+              icon: 'pdf'
+            }
+          }
+        ]
+      },
+      {
+        path: 'pdf-download-example',
+        component: loadViewToMap('views/developer/pdf/download.vue'),// () => import(/* webpackChunkName: "pdf-download-example" */ '@/views/pdf/download.vue'),
+        meta: { hidden: true }
+      },
+      {
+        path: 'clipboard',
+        component: Default,
+        redirect: 'noredirect',
+        children: [
+          {
+            path: 'index',
+            component: loadViewToMap('views/developer/clipboard/index.vue'),//() => import(/* webpackChunkName: "clipboard" */ '@/views/clipboard/index.vue'),
+            name: 'Clipboard',
+            meta: {
+              title: 'clipboard',
+              icon: 'clipboard'
+            }
+          }
+        ]
+      },
+      {
+        path: 'i18n',
+        component: Default,
+        children: [
+          {
+            path: 'index',
+            component: loadViewToMap('views/developer/i18n-demo/index.vue'),//() => import(/* webpackChunkName: "i18n-demo" */ '@/views/i18n-demo/index.vue'),
+            name: 'I18n',
+            meta: {
+              title: 'i18n',
+              icon: 'international'
+            }
+          }
+        ]
+      },
+      {
+        path: 'error',
+        component: Default,
+        redirect: 'noredirect',
+        meta: {
+          title: 'errorPages',
+          icon: '404'
+        },
+        children: [
+          {
+            path: '401',
+            component: loadViewToMap('views/error-page/401.vue'),//() => import(/* webpackChunkName: "error-page-401" */ '@/views/error-page/401.vue'),
+            name: 'Page401',
+            meta: {
+              title: 'page401',
+              noCache: true
+            }
+          },
+          {
+            path: '404',
+            component: loadViewToMap('views/error-page/404.vue'), // () => import(/* webpackChunkName: "error-page-404" */ '@/views/error-page/404.vue'),
+            name: 'Page404',
+            meta: {
+              title: 'page404',
+              noCache: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'https://github.com/Armour/vue-typescript-admin-template',
+        meta: {
+          title: 'externalLink',
+          icon: 'link'
         }
       },
       {
-        path: 'edit/:id(\\d+)',
-        component: loadViewToMap('view/example/edit.vue'), // () => import(/* webpackChunkName: "example-edit" */ '@/views/example/edit.vue'),
-        name: 'EditArticle',
-        meta: {
-          title: 'editArticle',
-          noCache: true,
-          activeMenu: '/example/list',
-          hidden: true
-        }
-      },
-      {
-        path: 'list',
-        component: loadViewToMap('view/example/list.vue'),// () => import(/* webpackChunkName: "example-list" */ '@/views/example/list.vue'),
-        name: 'ArticleList',
-        meta: {
-          title: 'articleList',
-          icon: 'list'
-        }
+        path: '/error-log',
+        component: Default,
+        redirect: 'noredirect',
+        children: [
+          {
+            path: 'log',
+            component: loadViewToMap('views/developer/error-log/index.vue'), // () => import(/* webpackChunkName: "error-log" */ '@/views/error-log/index.vue'),
+            name: 'ErrorLog',
+            meta: {
+              title: 'errorLog',
+              icon: 'bug'
+            }
+          }
+        ]
       }
     ]
-  },
-  {
-    path: '/tab',
-    component:  Layout,
-    children: [
-      {
-        path: 'index',
-        component: loadViewToMap('view/tab/index.vue'), //() => import(/* webpackChunkName: "tab" */ '@/views/tab/index.vue'),
-        name: 'Tab',
-        meta: {
-          title: 'tab',
-          icon: 'tab'
-        }
-      }
-    ]
-  },
-  {
-    path: '/error',
-    component:  Layout,
-    redirect: 'noredirect',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    },
-    children: [
-      {
-        path: '401',
-        component: loadViewToMap('view/error-page/401.vue'),//() => import(/* webpackChunkName: "error-page-401" */ '@/views/error-page/401.vue'),
-        name: 'Page401',
-        meta: {
-          title: 'page401',
-          noCache: true
-        }
-      },
-      {
-        path: '404',
-        component:  loadViewToMap('view/error-page/404.vue'), // () => import(/* webpackChunkName: "error-page-404" */ '@/views/error-page/404.vue'),
-        name: 'Page404',
-        meta: {
-          title: 'page404',
-          noCache: true
-        }
-      }
-    ]
-  },
-  {
-    path: '/error-log',
-    component:  Layout,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'log',
-        component: loadViewToMap('view/error-log/index.vue'),// () => import(/* webpackChunkName: "error-log" */ '@/views/error-log/index.vue'),
-        name: 'ErrorLog',
-        meta: {
-          title: 'errorLog',
-          icon: 'bug'
-        }
-      }
-    ]
-  },
-  {
-    path: '/excel',
-    component:  Layout,
-    redirect: '/excel/export-excel',
-    meta: {
-      title: 'excel',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: 'export-excel',
-        component: loadViewToMap('view/excel/export-excel.vue'),// () => import(/* webpackChunkName: "export-excel" */ '@/views/excel/export-excel.vue'),
-        name: 'ExportExcel',
-        meta: { title: 'exportExcel' }
-      },
-      {
-        path: 'export-selected-excel',
-        component: loadViewToMap('view/excel/select-excel.vue'),// () => import(/* webpackChunkName: "select-excel" */ '@/views/excel/select-excel.vue'),
-        name: 'SelectExcel',
-        meta: { title: 'selectExcel' }
-      },
-      {
-        path: 'export-merge-header',
-        component: loadViewToMap('view/excel/merge-header.vue'),// () => import(/* webpackChunkName: "merge-header" */ '@/views/excel/merge-header.vue'),
-        name: 'MergeHeader',
-        meta: { title: 'mergeHeader' }
-      },
-      {
-        path: 'upload-excel',
-        component:  loadViewToMap('view/excel/upload-excel.vue'),// () => import(/* webpackChunkName: "upload-excel" */ '@/views/excel/upload-excel.vue'),
-        name: 'UploadExcel',
-        meta: { title: 'uploadExcel' }
-      }
-    ]
-  },
-  {
-    path: '/zip',
-    component:  Layout,
-    redirect: '/zip/download',
-    meta: {
-      title: 'zip',
-      icon: 'zip',
-      alwaysShow: true // will always show the root menu
-    },
-    children: [
-      {
-        path: 'download',
-        component: loadViewToMap('view/zip/index.vue'), // () => import(/* webpackChunkName: "zip" */ '@/views/zip/index.vue'),
-        name: 'ExportZip',
-        meta: { title: 'exportZip' }
-      }
-    ]
-  },
-  {
-    path: '/pdf',
-    component:  Layout,
-    redirect: '/pdf/index',
-    children: [
-      {
-        path: 'index',
-        component: loadViewToMap('view/pdf/index.vue'),//() => import(/* webpackChunkName: "pdf" */ '@/views/pdf/index.vue'),
-        name: 'PDF',
-        meta: {
-          title: 'pdf',
-          icon: 'pdf'
-        }
-      }
-    ]
-  },
-  {
-    path: '/pdf-download-example',
-    component: loadViewToMap('view/pdf/download.vue'),// () => import(/* webpackChunkName: "pdf-download-example" */ '@/views/pdf/download.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/theme',
-    component:  Layout,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'index',
-        component: loadViewToMap('view/theme/index.vue'),//() => import(/* webpackChunkName: "theme" */ '@/views/theme/index.vue'),
-        name: 'Theme',
-        meta: {
-          title: 'theme',
-          icon: 'theme'
-        }
-      }
-    ]
-  },
-  {
-    path: '/clipboard',
-    component:  Layout,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'index',
-        component: loadViewToMap('view/clipboard/index.vue'),//() => import(/* webpackChunkName: "clipboard" */ '@/views/clipboard/index.vue'),
-        name: 'Clipboard',
-        meta: {
-          title: 'clipboard',
-          icon: 'clipboard'
-        }
-      }
-    ]
-  },
-  {
-    path: '/i18n',
-    component:  Layout,
-    children: [
-      {
-        path: 'index',
-        component: loadViewToMap('view/i18n-demo/index.vue'),//() => import(/* webpackChunkName: "i18n-demo" */ '@/views/i18n-demo/index.vue'),
-        name: 'I18n',
-        meta: {
-          title: 'i18n',
-          icon: 'international'
-        }
-      }
-    ]
-  },
-  {
-    path: 'https://github.com/Armour/vue-typescript-admin-template',
-    meta: {
-      title: 'externalLink',
-      icon: 'link'
-    }
-  },
-  {
-    path: '*',
-    redirect: '/404',
-    meta: { hidden: true }
   }
+];
+
+export const footerRoute:RouteConfig[] = 
+[
+    {
+        path: '/theme',
+        component: Layout,
+        redirect: 'noredirect',
+        children: [
+          {
+            path: 'index',
+            component: loadViewToMap('views/theme/index.vue'),//() => import(/* webpackChunkName: "theme" */ '@/views/theme/index.vue'),
+            name: 'Theme',
+            meta: {
+              title: 'theme',
+              icon: 'theme'
+            }
+          }
+        ]
+      },
+      {
+        path: '*',
+        redirect: '/404',
+        meta: { hidden: true }
+      }
 ];
 
 /**

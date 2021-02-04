@@ -14,10 +14,6 @@ import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/json-lint'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-// HACK: have to use script-loader to load jsonlint
-/* eslint-disable import/no-webpack-loader-syntax */
-require('script-loader!jsonlint')
-
 @Component({
   name: 'JsonEditor'
 })

@@ -10,7 +10,7 @@ const Map_Views:Map<string, any> = new Map<string, object> ();
 export const loadView = function (path:string|VueConstructor<Vue>) : Function
 {
     return (resolve:any) => {
-        console.log(resolve);
+        // console.log(resolve);
         require.ensure([], (require) => {
           resolve(require(`@/${path}`));
         });

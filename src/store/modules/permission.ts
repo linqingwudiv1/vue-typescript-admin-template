@@ -1,12 +1,12 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
 import { RouteConfig } from 'vue-router'
-import router, { asyncRoutes, constantRoutes } from '@/router'
+import router, { asyncRoutes, constantRoutes, footerRoute,  developRoutes } from '@/router'
 import store from '@/store'
 import { IRole } from './user'
-
+import { UserModule } from '@/store/modules/user'
 import Layout from '@/layout/index.vue'
 import { getUserRoute } from '@/api/users'
-import { loadView, loadViewToMap } from '@/utils/route'
+import {  loadViewToMap } from '@/utils/route'
 /**
  * 
  * @param roles 
@@ -88,13 +88,17 @@ class Permission extends VuexModule implements IPermissionState {
   public dynamicRoutes: RouteConfig[] = []
 
   @Mutation
-  private SET_ROUTES(routes: RouteConfig[]) {
-    this.routes = constantRoutes.concat(routes);
-    this.dynamicRoutes = routes; 
+  private SET_ROUTES(_routes: RouteConfig[]) {
+    if (UserModule.roles.find( (x) => x.name == 'admin' || x.name == 'developer'))
+    {
+      _routes = _routes.concat(developRoutes);
+    }
+    
+    _routes = _routes.concat(footerRoute);
+    this.routes = constantRoutes.concat( _routes );
+    console.log(_routes);
+    this.dynamicRoutes = _routes;  
   }
-
-
-  
 
   @Action
   public async GenerateRoutes(roles: IRole[]) {
@@ -105,7 +109,6 @@ class Permission extends VuexModule implements IPermissionState {
     if ( (typeof data) != "string" )
     {
       let user_route =  filterUserRoutes(data);
-      accessedRoutes = user_route;
     }
 
     /*
@@ -116,7 +119,8 @@ class Permission extends VuexModule implements IPermissionState {
     else 
     {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-    }*/
+    }
+    */
     
     this.SET_ROUTES(accessedRoutes)
   }

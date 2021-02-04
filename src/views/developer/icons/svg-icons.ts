@@ -1,4 +1,4 @@
-const req = require.context('../../icons/svg', false, /\.svg$/)
+const req = require.context('../../../icons/svg', false, /\.svg$/)
 const re = /\.\/(.*)\.svg/
 const requireAll = (requireContext: any) => requireContext.keys()
 
