@@ -66,11 +66,12 @@ class User extends VuexModule implements IUserState {
     let { username, password } = userInfo
     username = username.trim()
     const { data } = await login({ username, password })
-    if (data &&data.state)
+    if (data && data.state )
     {
       setToken(data.accessToken)
       this.SET_TOKEN(data.accessToken)
     }
+
     return data;
   }
 
@@ -93,7 +94,8 @@ class User extends VuexModule implements IUserState {
 
     const { roles, name, avatar, introduction, email } = data.user
     // roles must be a non-empty array
-    if (!roles || roles.length <= 0) {
+    if (!roles || roles.length <= 0) 
+    {
       throw Error('GetUserInfo: roles must be a non-null array!')
     }
     this.SET_ROLES( roles );

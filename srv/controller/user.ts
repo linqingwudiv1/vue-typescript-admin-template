@@ -65,7 +65,9 @@ route.post('/login', (req: Request, res: Response) => {
       return res.json({
         code: 20000,
         data: {
-          accessToken: username + '-token'
+          accessToken: username + '-token',
+          state : 1,
+          refreshToken : username + '-refresh-token',
         }
       })
     }
@@ -120,15 +122,16 @@ route.post('/info', (req: Request, res: Response) => {
 /**
  * 
  */
+import {userroute} from './userdata';
 route.get('/getRoutes', (req, res) => {
-  let jsonpath = join(__dirname, 'userdata.json');
-  const json = readFileSync(jsonpath, 'utf-8') ;
-  jsonpath = PathResolve(jsonpath);
+  //let jsonpath = join(__dirname, 'userdata.json');
+  //const json = readFileSync(jsonpath, 'utf-8') ;
+  //jsonpath = PathResolve(jsonpath);
+  
   return res.json({
-    //data:__dirname,
-    data :jsonpath.replace("\\\\", '/'),
-    json,
-    code: 20000
+    data :userroute,
+    code: 20000,
+    desc: ''
   })
 });
 

@@ -101,35 +101,14 @@ class Permission extends VuexModule implements IPermissionState {
     let accessedRoutes:RouteConfig[] = [];
     
     let { data } = await getUserRoute();
-    // let { data } = await getUserRoute();
 
     if ( (typeof data) != "string" )
     {
-      
       let user_route =  filterUserRoutes(data);
-      console.log(user_route);
       accessedRoutes = user_route;
-/*
-      let i = 1;
-      let data1 = data.map((x:any)=> 
-      {
-        //console.log(x.component, () =>  loadViewToMap(x.component));
-        return {
-          path: x.path,
-          component: loadViewToMap(x.component),
-          meta:{
-            icon:x.meta.icon,
-            title: x.meta.title ?? ''
-          }
-        };
-      });
-      
-      console.log(data1);
-      accessedRoutes = data1; *///[data1[0], data1[1]]; 
     }
-    //accessedRoutes = data1;
 
-    //判断是否有权限
+    /*
     if ( true ) 
     {
       //accessedRoutes = asyncRoutes;
@@ -137,7 +116,7 @@ class Permission extends VuexModule implements IPermissionState {
     else 
     {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-    }
+    }*/
     
     this.SET_ROUTES(accessedRoutes)
   }

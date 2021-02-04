@@ -7,7 +7,7 @@ const path = require('path')
 const devServerPort = 9527 // TODO: get this variable from setting.ts
 // const mockServerPort = 9528 // TODO: get this variable from setting.ts
 const devAPIServerPort = 44311
-const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
+const name = 'Admin 管理系统' // TODO: get this variable from setting.ts
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/vue-typescript-admin-template/' : '/',

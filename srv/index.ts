@@ -31,12 +31,12 @@ export default (app:Express, http:any) => {
 
   //#region Route
   app.use('/'            , homeRoute);
-  app.use('/articles'    , articlesRoute);
-  app.use('/pageviews'   , pageviewsRoute);
-  app.use('/users/'       , userRoute);
-  app.use('/roles/'      , roleRoute);
-  app.use('/routes/'     , routesRoute);
-  app.use(`/transactions/`, transactionRoute);
+  app.use('/api/articles'    , articlesRoute);
+  app.use('/api/pageviews'   , pageviewsRoute);
+  app.use('/api/users/'       , userRoute);
+  app.use('/api/roles/'      , roleRoute);
+  app.use('/api/routes/'     , routesRoute);
+  app.use(`/api/transactions/`, transactionRoute);
 
   // app.use('/AppAPI/api/biz', BizRoute);
   //#endregion
