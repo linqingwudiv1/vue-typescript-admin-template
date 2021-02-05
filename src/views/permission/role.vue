@@ -15,7 +15,7 @@
       <el-table-column
         align="center"
         label="Role Key"
-        width="220"
+        width="120"
       >
         <template slot-scope="scope">
           {{ scope.row.key }}
@@ -24,10 +24,19 @@
       <el-table-column
         align="center"
         label="Role Name"
-        width="220"
+        width="200"
       >
         <template slot-scope="scope">
           {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="Role DisplayName"
+        width="220"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.displayName }}
         </template>
       </el-table-column>
       <el-table-column
@@ -67,7 +76,7 @@
     >
       <el-form
         :model="role"
-        label-width="80px"
+        label-width="100px"
         label-position="left"
       >
         <el-form-item label="Name">
@@ -76,6 +85,13 @@
             placeholder="Role Name"
           />
         </el-form-item>
+        <el-form-item label="Display Name">
+          <el-input
+            v-model="role.displayName"
+            placeholder="DisplayName"
+          />
+        </el-form-item>
+
         <el-form-item label="Desc">
           <el-input
             v-model="role.description"
@@ -125,6 +141,7 @@ import { getRoutes, getRoles, createRole, deleteRole, updateRole } from '@/api/r
 interface IRole {
   key: number
   name: string
+  displayName: string
   description: string
   routes: RouteConfig[]
 }
@@ -138,6 +155,7 @@ interface IRoutesTreeData {
 const defaultRole: IRole = {
   key: 0,
   name: '',
+  displayName: '',
   description: '',
   routes: []
 }
@@ -316,7 +334,7 @@ export default class extends Vue {
       this.rolesList.push(this.role)
     }
 
-    const { description, key, name } = this.role
+    const { description, key, name, displayName } = this.role
     this.dialogVisible = false
     this.$notify({
       title: 'Success',
@@ -324,6 +342,7 @@ export default class extends Vue {
       message: `
           <div>Role Key: ${key}</div>
           <div>Role Name: ${name}</div>
+          <div>Role DisplayName : ${displayName} </div>
           <div>Description: ${description}</div>
         `,
       type: 'success'

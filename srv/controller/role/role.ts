@@ -36,6 +36,9 @@ const roles: any[] = [
   }
 ]
 
+/**
+ * 
+ */
 route.get('/', (req: Request, res: Response) => {
     return res.json({
       code: 20000,
@@ -44,7 +47,9 @@ route.get('/', (req: Request, res: Response) => {
     })
   });
 
-
+/**
+ * 
+ */
 route.post('/', (req: Request, res: Response) => {
   return res.json({
     code: 20000,
@@ -54,7 +59,9 @@ route.post('/', (req: Request, res: Response) => {
   })
 } );
 
-
+/**
+ * 
+ */
 route.put('/:role', (req: Request, res: Response) => {
   const { role } = req.body
   return res.json({
@@ -65,6 +72,9 @@ route.put('/:role', (req: Request, res: Response) => {
   })
 });
 
+/**
+ * 
+ */
 route.delete('/:role',  (req: Request, res: Response) => {
   return res.json({
     code: 20000,
