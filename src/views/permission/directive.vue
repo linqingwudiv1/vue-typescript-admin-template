@@ -14,7 +14,8 @@
           <el-tag
             class="permission-tag"
             size="small"
-          >admin</el-tag> can see this
+          >admin</el-tag>
+          can see this
         </span>
         <el-tag
           v-permission="['admin']"
