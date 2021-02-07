@@ -10,8 +10,8 @@ interface IRole {
   name: string
   displayName: string
   description: string
-  routes: number[],
-  //viewRoutes: IRoutesTreeData[]
+  routes: IRoutesTreeData[],
+  routes_key:number[]
 }
 
 interface IRoutesTreeData {
@@ -19,7 +19,7 @@ interface IRoutesTreeData {
   children?: IRoutesTreeData[]
   title?: string,
   path: string,
-  hierarchyPath?: string,
+  hierarchyPath: string,
   parentId?: number,
   redirect?:string,
   component?:string,
@@ -33,7 +33,7 @@ const defaultRole: IRole = {
   displayName: '',
   description: '',
   routes: [],
-  //viewRoutes:[]
+  routes_key: []
 }
 
 @Component({
@@ -78,6 +78,7 @@ export default class extends Vue {
     for (const route of routes) {
       const tmp: IRoutesTreeData = {
         id : 0,
+        hierarchyPath: '0',
         children: [],
         title: '',
         path: ''
@@ -85,6 +86,8 @@ export default class extends Vue {
       tmp.title = this.$t(`route.${route.meta.title}`).toString()
       tmp.path = route.path
       tmp.id = route.id;
+      tmp.hierarchyPath = route.hierarchyPath;
+
       if (route.children) {
         tmp.children = this.generateTreeData(route.children)
       }
@@ -109,6 +112,7 @@ export default class extends Vue {
         id : route.id,
         name: route.name,
         title: route.title,
+        hierarchyPath : route.hierarchyPath,
         path: route.path,//path.resolve(basePath, route.path),
         meta: {
           title: route.meta && route.meta.title
@@ -123,41 +127,77 @@ export default class extends Vue {
     return reshapedRoutes
   }
 
-  private flattenRoutes(routes: IRoutesTreeData[]) {
-    let data: IRoutesTreeData[] = []
+  /**
+   * Tree结构转List
+   * @param routes 
+   */
+   private flattenRoutes(routes: IRoutesTreeData[]) {
+     let data: IRoutesTreeData[] = []
+     routes.forEach(route => {
+
+       data.push(route)
+       if (route.children) {
+         const temp = this.flattenRoutes(route.children)
+         if (temp.length > 0) {
+           data = [...data, ...temp]
+         }
+       }
+     })
+     console.log('from flatt', routes);
+     return data
+   }
+
+  private flattenRoutesToKey(routes: IRoutesTreeData[]):number[]
+  {
+    let data: number[] = []
+
     routes.forEach(route => {
-      data.push(route)
+      data.push(route.id)
       if (route.children) {
-        const temp = this.flattenRoutes(route.children)
+        const temp = this.flattenRoutesToKey(route.children)
         if (temp.length > 0) {
-          data = [...data, ...temp]
+          data = [...data, ...temp ]
         }
       }
     })
-    return data
+
+    return data;
   }
+
 
   private handleCreateRole() {
     this.role = Object.assign({}, defaultRole)
-    if (this.$refs.tree) {
-      (this.$refs.tree as Tree).setCheckedKeys([])
+    const tree = (this.$refs.tree as Tree)
+    if (tree) {
+      tree.setCheckedKeys([])
     }
     this.dialogType = 'new'
     this.dialogVisible = true
   }
 
   private handleEdit(scope: any) {
+    
     this.dialogType = 'edit'
     this.dialogVisible = true
     this.checkStrictly = true
     this.role = cloneDeep(scope.row)
     this.$nextTick(() => {
-      //console.log(this.role.viewRoutes)
-      const routes:IRoutesTreeData[] = [];//this.flattenRoutes(this.reshapeRoutes(this.role.routes))
-      // console.log(routes)
-      const treeData = this.generateTreeData(routes)
-      const treeDataKeys = treeData.map(t => t.id);
-      (this.$refs.tree as Tree).setCheckedKeys(treeDataKeys)
+      const treeCom = (this.$refs.tree as Tree);
+      console.log('role routes', this.role.routes, this.reshapeRoutes(this.role.routes))
+      const routes:IRoutesTreeData[] = this.flattenRoutes(this.role.routes)
+      console.log(routes);
+      const treeData = this.generateTreeData(routes);
+      const treeDataKeys = routes.map(t => t.hierarchyPath);
+      // console.log(treeDataKeys, '\n treedata : ', treeData , '\n role.routes : ', this.role.routes);
+      if (treeCom)
+      {
+        treeCom.setCheckedKeys(treeDataKeys)
+      }
+      else 
+      {
+        console.error('tree com is invalid')
+      }
+      
       // set checked state of a node not affects its father and child nodes
       this.checkStrictly = false
     })
@@ -181,30 +221,15 @@ export default class extends Vue {
       .catch(err => { console.error(err) })
   }
 
-  private generateTree(routes: IRoutesTreeData[], basePath = '/', checkedKeys: string[]) {
-    const res: IRoutesTreeData[] = []
-    for (const route of routes) {
-      const routePath = path.resolve(basePath, route.path)
-      // recursive child routes
-      if (route.children) {
-        route.children = this.generateTree(route.children, routePath, checkedKeys)
-      }
-      if (checkedKeys.includes(routePath) || (route.children && route.children.length >= 1)) {
-        res.push(route)
-      }
-    }
-    return res
-  }
-
-    private generateTree1(routes: any[], id:number= 0, checkedKeys: number[]) {
+  private generateTree(routes: any[], checkedKeys: string[]) {
     const res: any[] = []
     for (const route of routes) {
       //const routePath = path.resolve(basePath, route.path)
       // recursive child routes
       if (route.children) {
-        route.children = this.generateTree1(route.children, route.id, checkedKeys)
+        route.children = this.generateTree(route.children, checkedKeys)
       }
-      if (checkedKeys.findIndex(x=> x == route.id) > -1 || (route.children && route.children.length >= 1)) {
+      if (checkedKeys.includes(route.hierarchyPath)  || (route.children && route.children.length >= 1)) {
         res.push(route)
       }
     }
@@ -217,10 +242,12 @@ export default class extends Vue {
   private async confirmRole() {
     const isEdit = this.dialogType === 'edit';
     const tree = (this.$refs.tree as Tree);
-    const checkedKeys = [...tree.getCheckedKeys(false), ...tree.getHalfCheckedKeys()];
-    //this.role.viewRoutes = this.generateTree(cloneDeep(this.serviceRoutes), '/', checkedKeys)
-    this.role.routes = checkedKeys;
-    console.log(checkedKeys);
+    const checkedKeys = tree.getCheckedKeys() //[...];
+    this.role.routes_key = this.flattenRoutesToKey(this.generateTree(cloneDeep(this.serviceRoutes), checkedKeys));
+    this.role.routes = this.generateTree(cloneDeep(this.serviceRoutes), checkedKeys);
+    // this.role.viewRoutes = this.generateTree(cloneDeep(this.serviceRoutes), '/', checkedKeys)
+    // this.role.routes = checkedKeys;
+    console.log(this.role.routes, this.role.routes_key);
     if (isEdit) {
       await updateRole(this.role.key, { role: 
         {
@@ -228,21 +255,28 @@ export default class extends Vue {
             name: this.role.name,
             displayName: this.role.displayName,
             description: this.role.description,
-            routes: this.role.routes   
+            routes: this.role.routes_key   
         } /*this.role*/ })
 
       for (let index = 0; index < this.rolesList.length; index++) 
       {
         if (this.rolesList[index].key === this.role.key) 
         {
-          this.rolesList.splice(index, 1, Object.assign({}, this.role))
-          break
+          this.rolesList.splice(index, 1, Object.assign({}, this.role));
+          break;
         }
       }
     } else {
-      const { data } = await createRole({ role: this.role })
-      this.role.key = data.key
-      this.rolesList.push(this.role)
+      const { data } = await createRole({ role: {
+            key: this.role.key,
+            name: this.role.name,
+            displayName: this.role.displayName,
+            description: this.role.description,
+            routes: this.role.routes_key   
+        }
+      });
+      this.role.key = data.key;
+      this.rolesList.push(this.role);
     }
 
     const { description, key, name, displayName } = this.role

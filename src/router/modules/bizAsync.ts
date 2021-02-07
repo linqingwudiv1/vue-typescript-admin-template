@@ -21,12 +21,19 @@ const bizAsncRoute:RouteConfig[] =
         },
         children: [
           {
+            path: 'pageRoute',
+            component: loadViewToMap('views/permission/page-route.vue'),//() => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
+            name: 'PageRoute',
+            meta: {
+              title: 'pagePermission',
+            }
+          },
+          {
             path: 'page',
             component: loadViewToMap('views/permission/page.vue'),//() => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
             name: 'PagePermission',
             meta: {
               title: 'pagePermission',
-              roles: [1] // or you can only set roles in sub nav
             }
           },
           {

@@ -107,7 +107,7 @@
             :data="routesTreeData"
             :props="defaultProps"
             show-checkbox
-            node-key="id"
+            node-key="hierarchyPath"
             class="permission-tree"
           />
         </el-form-item>
