@@ -275,7 +275,7 @@ export default class extends Vue {
             routes: this.role.routes_key   
         }
       });
-      this.role.key = data.key;
+      this.role.key = data;
       this.rolesList.push(this.role);
     }
 
