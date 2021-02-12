@@ -46,8 +46,10 @@ module.exports = {
     'style-resources-loader': {
       preProcessor: 'scss',
       patterns: [
-        'D:\\Work_LQ\\private\\vue-typescript-admin-template\\src\\styles\\_variables.scss',
-        'D:\\Work_LQ\\private\\vue-typescript-admin-template\\src\\styles\\_mixins.scss'
+        './src/styles/_variables.scss',
+        './src/styles/_mixins.scss'
+        // 'D:\\Work_LQ\\private\\vue-typescript-admin-template\\src\\styles\\_variables.scss',
+        // 'D:\\Work_LQ\\private\\vue-typescript-admin-template\\src\\styles\\_mixins.scss'
       ]
     },
     express: {
