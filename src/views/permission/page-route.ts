@@ -132,18 +132,26 @@ export default class extends Vue {
 
     //#region event
 
+    /**
+     * 
+     * @param node 
+     * @param data 
+     */
     private oncurrent_change(node:any,data:IRoutesTreeData)
     {
       // const newChild = { id: id++, label: 'testtest', children: [] };
-
-      if (!data.children) {
+      if ( !data.children )
+      {
         this.$set(data, 'children', []);
       }
 
       // data.children.push(newChild);
     }
 
-    /** */
+    /**
+     * 
+     * @param data 
+     */
     private append( data:IRoutesTreeData):void
     {
       this.dialogVisible = true;
