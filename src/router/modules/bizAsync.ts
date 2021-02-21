@@ -51,11 +51,18 @@ const bizAsncRoute:RouteConfig[] =
             name: 'RolePermission',
             meta: {
               title: 'rolePermission',
-              roles: [1]
+            }
+          },
+          {
+            path: 'userRoleMgr',
+            component: loadViewToMap('views/permission/user-role-mgr.vue'),//() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
+            name: 'UserRoleMgrPermission',
+            meta: {
+              title: 'userRoleMgrPermission',
             }
           }
         ]
-      }
+    }
 ];
 
 export default bizAsncRoute;

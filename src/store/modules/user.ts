@@ -5,8 +5,6 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
-import { isEmptyOrNull } from '@/utils/validate'
-import faker from 'faker'
 
 
 export interface IRole{

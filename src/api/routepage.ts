@@ -5,7 +5,7 @@ import request from "@/utils/request"
  * 
  * @param params 
  */
-export const createPageRoute = (params:any) =>
+export const CreatePageRoute = (params:any) =>
 {
     return request({
         url: '/routes',
@@ -26,9 +26,6 @@ export const UpdatePageRoute = (params:any)=>
         data:params
     })
 }
-
-
-
 
 /**
  * 

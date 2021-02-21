@@ -2,12 +2,12 @@
   <div class="app-container">
     <el-button
       type="primary"
-      @click="onclick_CreateRoute">
+      @click="onclick_CreateRootRoute">
       新增
     </el-button>
 
     <el-row>
-      <el-col v-bind:span="8">
+      <el-col v-bind:span="24">
         <div class="permission-container">
           <el-tree
             ref="tree"
@@ -22,8 +22,11 @@
             class="permission-tree">
               <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}
-                  <el-tag type="primary" style="margin-left:16px;">{{data.viewLabel}}</el-tag>
-                  <el-tag type="primary" style="margin-left:16px;">{{data.path}}</el-tag>
+                  <el-tag size="mini" type="primary" style="margin-left:10px;">{{data.hierarchyPath}}</el-tag>
+                  <el-tag size="mini" type="primary" style="margin-left:10px;">{{data.viewLabel}}</el-tag>
+                  <el-tag size="mini" type="primary" style="margin-left:10px;">{{data.path}}</el-tag>
+                  <el-tag size="mini" type="primary" style="margin-left:10px;">{{data.component}}</el-tag>
+                  <el-tag size="mini" type="primary" style="margin-left:10px;">{{data.meta.icon}}</el-tag>
                 </span>
                 <span>
                   <el-button
@@ -119,6 +122,7 @@
         <el-button
           type="danger"
           size="small"
+          v-on:click="onclick_confirm"
         >
           {{ $t('permission.confirm') }}
         </el-button>
@@ -138,6 +142,7 @@
     border-right 1px solid rgba(128, 128, 128, 0.2);
     padding-right: 20px;
     height:80vh;
+    overflow-y: auto;
     >>>.custom-tree-node 
       flex: 1;
       display: flex;
