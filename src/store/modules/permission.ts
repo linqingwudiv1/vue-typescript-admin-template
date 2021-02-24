@@ -89,7 +89,8 @@ class Permission extends VuexModule implements IPermissionState {
 
   @Mutation
   private SET_ROUTES(_routes: RouteConfig[]) {
-    if (UserModule.roles.find( (x) => x.name == 'admin' || x.name == 'developer'))
+    console.log(UserModule.roles);
+    if (UserModule.roles.find( (x) => x.name.toLowerCase() == 'admin' || x.name.toLowerCase() == 'developer' || x.name == '开发程序员'))
     {
       _routes = _routes.concat(developRoutes);
     }
