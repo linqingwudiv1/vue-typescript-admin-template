@@ -65,3 +65,16 @@ export const getUserRoute = ()=>
     method: 'get'
   });
 }
+
+
+
+/**
+ * 
+ */
+export const getUserCOSToken = () =>
+{
+  return request({
+    url: '/users/GetCOSToken' ,
+    method: 'get'
+  });
+}

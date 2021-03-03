@@ -16,7 +16,6 @@ const bizAsncRoute:RouteConfig[] =
         meta: {
           title: 'permission',
           icon: 'lock',
-          roles: [1, 2], // you can set roles in root nav
           alwaysShow: true // will always show the root menu
         },
         children: [
@@ -62,6 +61,25 @@ const bizAsncRoute:RouteConfig[] =
             }
           }
         ]
+    },
+    {
+      path: '/appMgr',
+      component: Layout,
+      redirect: '/appMgr/index',
+      meta: {
+        title: 'appMgr',
+        icon: 'lock',
+        alwaysShow: true // will always show the root menu
+      },
+      children:[
+        {
+        path: 'index',
+        component: loadViewToMap('views/app-mgr/app-mgr.vue'),//() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
+        name: 'AppMgrHome',
+        meta: {
+          title: 'appMgrHome',
+        }
+      }]
     }
 ];
 
