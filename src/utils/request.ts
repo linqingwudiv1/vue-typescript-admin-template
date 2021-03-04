@@ -37,7 +37,7 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 20000) {
       Message({
-        message: res.message || 'Error',
+        message: res.message || res.desc || res.data || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -55,7 +55,7 @@ service.interceptors.response.use(
           location.reload() // To prevent bugs from vue-router
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.message || res.desc || res.data || 'Error'))
     } else {
       return response.data
     }

@@ -9,7 +9,7 @@ export const getAppInfos = (query:any)=>
 {
     return request(
         {
-            url: 'asset/appinfo/GetAppInfos',
+            url: '/asset/appinfo/GetAppInfos',
             method:'post',
             data: query
         });
@@ -23,7 +23,7 @@ export const createAppInfo = (data:any) =>
 {
     return request
     ({
-        url: 'asset/appinfo',
+        url: '/asset/appinfo',
         method:'post',
         data: data
     });
@@ -33,13 +33,12 @@ export const createAppInfo = (data:any) =>
  * 
  * @param data 
  */
-export const deleteAppInfo = (data:any) =>
+export const deleteAppInfo = (id:number) =>
 {
     return request
     ({
-        url: 'asset/appinfo',
-        method:'delete',
-        data: data
+        url: `/asset/AppInfo/${id}`,
+        method:'delete'
     });
 }
 
@@ -51,7 +50,7 @@ export const updateAppInfo = (data:any) =>
 {
     return request
     ({
-        url: 'asset/appinfo',
+        url: '/asset/appinfo',
         method:'put',
         data: data
     })
