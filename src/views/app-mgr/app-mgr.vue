@@ -35,7 +35,7 @@
                                     {{scope.row.bEnable? '启用' : '未启用'}}
                                 </el-tag>
                                 <el-tag style="margin-right:5px" 
-                                    v-if="scope.row.bEnable" :type="primary">
+                                        v-if="scope.row.bEnable" :type="primary">
                                     强制更新版本
                                 </el-tag>
                             </div>
@@ -45,7 +45,7 @@
                     <el-table-column width="200" label="操作">
                         <template slot-scope="scope">
                             <el-button size="small" type="primary" v-on:click="onclick_openEdit(scope.row)"> 编辑    </el-button>
-                            <el-button size="small" type="danger"  v-on:click="onclick_remove(scope.row)"> 删除    </el-button>
+                            <el-button size="small" type="danger"  v-on:click="onclick_remove(scope.row)"> 删除      </el-button>
                         </template>
                     </el-table-column>
                 </el-table>

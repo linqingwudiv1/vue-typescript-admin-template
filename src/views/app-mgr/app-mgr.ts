@@ -326,7 +326,7 @@ const default_appinfo:IAppInfo =
                 if (item.id == this.appinfo_copy.id)
                 {
                     this.$set(this.appinfo_data, i,  Object.assign({}, this.appinfo_copy));
-                    this.$message({type:'success' , message:'更新成功...'})
+                    this.$message({type:'success' , message:'更新成功...'});
                     return;
                 }
             }
