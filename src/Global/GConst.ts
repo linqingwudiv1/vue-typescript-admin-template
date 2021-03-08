@@ -11,6 +11,5 @@ export class GConst
     
     /** COS Region */
     public static readonly COSRegion:string = 'ap-guangzhou';
-
 }
 
