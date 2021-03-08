@@ -26,7 +26,7 @@ export default class extends Vue {
   @Prop({ default: 0 }) private backPosition!: number
   @Prop({
     default: () => {
-      return {
+      return {   
         right: '50px',
         bottom: '50px',
         width: '40px',
