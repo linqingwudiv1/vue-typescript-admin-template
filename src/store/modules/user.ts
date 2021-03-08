@@ -1,3 +1,4 @@
+import { Message } from 'element-ui';
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import { login, logout, getUserInfo, getUserRoute } from '@/api/users'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
@@ -66,6 +67,7 @@ class User extends VuexModule implements IUserState {
     let { username, password } = userInfo
     username = username.trim()
     const { data } = await login({ username, password })
+
     if (data && data.state )
     {
       setToken(data.accessToken)
@@ -87,17 +89,23 @@ class User extends VuexModule implements IUserState {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
     }
+    
     const { data } = await getUserInfo({ /* Your params here */ })
+
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
 
+
     const { roles, name, avatar, introduction, email } = data.user
     // roles must be a non-empty array
+
     if (!roles || roles.length <= 0) 
     {
+      Message.error(`用户【${name}】无权限访问后台,请联系后台管理人员添加访问权限`);
       throw Error('GetUserInfo: roles must be a non-null array!')
     }
+    
     this.SET_ROLES( roles );
     this.SET_NAME(name);
     this.SET_AVATAR( avatar);

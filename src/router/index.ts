@@ -1,17 +1,6 @@
 import Vue from 'vue'
 import Router, { RouteConfig } from 'vue-router'
 
-/* Layout */
-import Layout from '@/layout/index.vue'
-import Default from '@/layout/default.vue'
-/* Router modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
-import { resolve } from 'path'
-import { Component, DefaultComputed, DefaultData, DefaultMethods } from 'vue/types/options'
-import { loadViewToMap } from '@/utils/route'
 import bizAsncRouter from './modules/bizAsync'
 import developRouter from './modules/developer'
 import footerRouter from './modules/footer'

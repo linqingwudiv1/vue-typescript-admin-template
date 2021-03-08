@@ -22,9 +22,9 @@ const bizAsncRoute:RouteConfig[] =
           {
             path: 'pageRoute',
             component: loadViewToMap('views/permission/page-route.vue'),//() => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
-            name: 'PageRoute',
+            name: 'PageRouteMgr',
             meta: {
-              title: 'pagePermission',
+              title: 'pageRouteMgr',
             }
           },
           {
@@ -55,9 +55,9 @@ const bizAsncRoute:RouteConfig[] =
           {
             path: 'userRoleMgr',
             component: loadViewToMap('views/permission/user-role-mgr.vue'),//() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
-            name: 'UserRoleMgrPermission',
+            name: 'UserRoleMgr',
             meta: {
-              title: 'userRoleMgrPermission',
+              title: 'userRoleMgr',
             }
           }
         ]

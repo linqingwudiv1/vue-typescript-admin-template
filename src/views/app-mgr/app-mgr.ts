@@ -20,6 +20,8 @@ interface IAppInfo
     url:string,
     bLatest:boolean,
     bEnable:boolean,
+    createTime:string,
+    updateTime:string,
     bBeta:boolean,
     bForceUpdate:boolean
 
@@ -50,7 +52,9 @@ const default_query:IQuery =
     }
 };
 
-
+/**
+ * 
+ */
 const default_appinfo:IAppInfo = 
 {
     id: 0,
@@ -60,7 +64,9 @@ const default_appinfo:IAppInfo =
     bLatest: true,
     bEnable: true,
     bBeta:   false,
-    bForceUpdate:true
+    bForceUpdate:true,
+    createTime:'',
+    updateTime:''
 };
 
 @Component({
@@ -254,21 +260,20 @@ const default_appinfo:IAppInfo =
             });
             
         
-        const cos_key = `AppInfo/${this.appinfo_copy.appName}/${this.appinfo_copy.appVersion}/steup.exe`;
+        const cos_key = `AppInfo/${this.appinfo_copy.appName}/${this.appinfo_copy.appVersion}/setup.exe`;
         cos.sliceUploadFile({
                 Bucket: GConst.COSBuket , // Bucket 格式：test-1250000000
                 Region: GConst.COSRegion,
                 Key: cos_key, /* 必须 */
                 Body: file,
-                onTaskReady:(progressData)=>
+                onTaskReady:(progressData) =>
                 {
                     this.loading.bUploading = true;
                     //console.log('onHashProgress', JSON.stringify(progressData));
                 },
-                onProgress: async(progressData)=>
+                onProgress: async(progressData) =>
                 {
                     this.$emit('on-setup-progress', progressData.percent);
-                    
                 }
             }, 
             async (err,res) =>
@@ -318,7 +323,6 @@ const default_appinfo:IAppInfo =
         {
             await updateAppInfo(this.appinfo_copy);
             this.dialog.bShowEdit = false;
-
 
             for (let i = 0; i  < this.appinfo_data.length; i++)
             {

@@ -4308,6 +4308,11 @@ date-fns@^2.0.1:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.11.1.tgz#197b8be1bbf5c5e6fe8bea817f0fe111820e7a12"
   integrity sha512-3RdUoinZ43URd2MJcquzBbDQo+J87cSzB8NkXdZiN5ia1UNyep0oCyitfiL88+R7clGTeq/RniXAc16gWyAu1w==
 
+date@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/date/-/date-1.0.2.tgz#9f1503d6519843d94866fc79a91e9be88dcb4776"
+  integrity sha1-nxUD1lGYQ9lIZvx5qR6b6I3LR3Y=
+
 dateformat@~1.0.4-1.2.3:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-1.0.12.tgz#9f124b67594c937ff706932e4a642cca8dbbfee9"

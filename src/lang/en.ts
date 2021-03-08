@@ -8,6 +8,8 @@ export default {
     pagePermission: 'Page Permission',
     rolePermission: 'Role Permission',
     directivePermission: 'Directive Permission',
+    pageRouteMgr: 'Route Manager',
+    userRoleMgr:  'User Role Permission',
     icons: 'Icons',
     components: 'Components',
     tinymce: 'Tinymce',

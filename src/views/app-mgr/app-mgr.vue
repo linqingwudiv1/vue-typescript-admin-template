@@ -22,12 +22,12 @@
                             <div>
                                 <el-tag style="margin-right:5px" 
                                         v-if="scope.row.bLatest"
-                                        :type="primary">
+                                        type="primary">
                                     最近版本
                                 </el-tag>
                                 <el-tag style="margin-right:5px"
                                 v-if="scope.row.bBeta"
-                                :type="primary">
+                                type="primary">
                                 Beta 
                                 </el-tag>
                                 <el-tag style="margin-right:5px" 
@@ -35,14 +35,16 @@
                                     {{scope.row.bEnable? '启用' : '未启用'}}
                                 </el-tag>
                                 <el-tag style="margin-right:5px" 
-                                        v-if="scope.row.bEnable" :type="primary">
+                                        v-if="scope.row.bEnable" type="primary">
                                     强制更新版本
                                 </el-tag>
                             </div>
 
                         </template>
                     </el-table-column>
-                    <el-table-column width="200" label="操作">
+                    <el-table-column width="220" label="创建日期" prop="createTime"></el-table-column>
+                    <el-table-column width="220" label="更新日期" prop="updateTime"></el-table-column>
+                    <el-table-column width="180" label="操作">
                         <template slot-scope="scope">
                             <el-button size="small" type="primary" v-on:click="onclick_openEdit(scope.row)"> 编辑    </el-button>
                             <el-button size="small" type="danger"  v-on:click="onclick_remove(scope.row)"> 删除      </el-button>
@@ -83,7 +85,6 @@
                     <el-checkbox v-model="appinfo_copy.bLatest">最新版本</el-checkbox>
                     <el-checkbox v-model="appinfo_copy.bForceUpdate">强制更新</el-checkbox>
                 </el-form-item>
-
                 <el-form-item>
                     <div style="text-align:right;">
                         <el-button
