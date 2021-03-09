@@ -8,6 +8,8 @@ export default {
     pagePermission: 'Page Permission',
     rolePermission: 'Role Permission',
     directivePermission: 'Directive Permission',
+    appMgrHome:'App Manager',
+    appDocMgr:'App Doc Manager',
     pageRouteMgr: 'Route Manager',
     userRoleMgr:  'User Role Permission',
     icons: 'Icons',

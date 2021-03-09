@@ -73,6 +73,23 @@ export default class extends mixins(ResizeMixin) {
 }
 </script>
 
+
+<style lang="stylus">
+::-webkit-scrollbar-track-piece
+    box-shadow   : inset 0 0 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background   : #ededed;
+::-webkit-scrollbar
+  width : 10px;  
+  height: 10px;
+::-webkit-scrollbar-thumb
+  border-radius: 5px;
+  box-shadow   : inset 0 0 3px rgba(0, 0, 0, 0.1);
+  background   : #838383;
+::-webkit-scrollbar-thumb:hover
+    -webkit-border-radius:10px;
+    background   : #636363;
+</style>
 <style lang="scss" scoped>
 .app-wrapper {
   @include clearfix;

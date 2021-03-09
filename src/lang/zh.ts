@@ -11,6 +11,7 @@ export default {
     userRoleMgr:'用户角色管理',
     appMgr:'App管理',
     appMgrHome:'App版本管理',
+    appDocMgr:'App文档管理',
     pageRouteMgr: '路由页面管理',
     appHomeMgr:'',
     icons: '图标',

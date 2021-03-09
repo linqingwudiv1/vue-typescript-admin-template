@@ -35,8 +35,7 @@
     "DebugServer/**/*.ts",
     "DebugServer/**/*.tsx",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-, "DebugServer/controller/users/userdata.js"  ],
+    "tests/**/*.tsx" ],
   "exclude": [
     "node_modules"
   ]

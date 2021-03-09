@@ -82,7 +82,6 @@ const default_appinfo:IAppInfo =
     private appinfo_data:Array<IAppInfo> = [];
     private appinfo_total:number = 0;
     private query:IQuery = Object.assign({}, default_query);
-
     /** 副本 */
     private appinfo_copy:IAppInfo = Object.assign({},default_appinfo );
 

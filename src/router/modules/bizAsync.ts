@@ -71,13 +71,19 @@ const bizAsncRoute:RouteConfig[] =
         icon: 'lock',
         alwaysShow: true // will always show the root menu
       },
-      children:[
-        {
+      children:[{
         path: 'index',
         component: loadViewToMap('views/app-mgr/app-mgr.vue'),//() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
         name: 'AppMgrHome',
         meta: {
           title: 'appMgrHome',
+        }
+      },{
+        path: 'docmgr',
+        component: loadViewToMap('views/app-mgr/app-doc-mgr.vue'),//() => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
+        name: 'AppDocMgr',
+        meta: {
+          title: 'appDocMgr',
         }
       }]
     }

@@ -193,10 +193,9 @@ export default class extends Vue {
 
       await updateUserRoles({users: [this.edit_user.id], roles:new_role  });
       this.$message({type:'success', message:'修改权限成功...'});
-  
       
-      let idx = this.data_users.findIndex( (x:IUserInfo) => {return x.id === this.edit_user.id } );
-      this.edit_user.roles = table.selection.map( (x:any) => {return { key: x.key, name: x.name, displayName: x.displayName}});
+      let idx = this.data_users.findIndex( (x:IUserInfo) =>  { return x.id === this.edit_user.id } );
+      this.edit_user.roles = table.selection.map( (x:any) => { return { key: x.key, name: x.name, displayName: x.displayName}});
       this.$set(this.data_users, idx, this.edit_user);  
     }
     else 

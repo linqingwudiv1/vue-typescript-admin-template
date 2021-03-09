@@ -46,8 +46,8 @@
                     <el-table-column width="220" label="更新日期" prop="updateTime"></el-table-column>
                     <el-table-column width="180" label="操作">
                         <template slot-scope="scope">
-                            <el-button size="small" type="primary" v-on:click="onclick_openEdit(scope.row)"> 编辑    </el-button>
-                            <el-button size="small" type="danger"  v-on:click="onclick_remove(scope.row)"> 删除      </el-button>
+                            <el-button size="small" type="primary" v-on:click="onclick_openEdit(scope.row)">    编辑    </el-button>
+                            <el-button size="small" type="danger"  v-on:click="onclick_remove(scope.row)">      删除    </el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -152,15 +152,13 @@
 
                 <el-form-item>
                     <div style="text-align:right;">
-                        <el-button
-                        type="danger"
-                        @click="dialog.bShowCreate=false">
-                        取消
+                        <el-button type="danger" 
+                                   @click="dialog.bShowCreate=false">
+                                   取消
                         </el-button>
-                        <el-button
-                        @click="onclick_submitCreate"
-                        type="primary">
-                        确认
+                        <el-button @click="onclick_submitCreate" 
+                                   type="primary">
+                                    确认
                         </el-button>
                     </div>
                 </el-form-item>

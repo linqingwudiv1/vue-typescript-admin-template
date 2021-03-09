@@ -205,7 +205,7 @@ export default class extends Vue {
 
   private handleDelete(scope: any) {
     const { $index, row } = scope
-    this.$confirm('Confirm to remove the role?', 'Warning', {
+    this.$confirm('确定移除当前选中角色?', 'Warning', {
       confirmButtonText: 'Confirm',
       cancelButtonText: 'Cancel',
       type: 'warning'
