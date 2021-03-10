@@ -8,29 +8,30 @@
         >创建</el-button> -->
 
       <span style="padding: 0 15px">App :</span>
-      <el-select v-model="query.data.appName" placeholder="请选择">
+      <el-select v-model="query.data.appName"
+                v-on:change="onchange_query"
+                 placeholder="请选择">
         <el-option
           v-for="item in appType"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
+          v-bind:key="item.value"
+          v-bind:label="item.label"
+          v-bind:value="item.value">
         </el-option>
       </el-select>
 
       <span style="padding: 0 15px">语言 :</span>
-      <el-select v-model="query.data.lang" placeholder="请选择">
-        <el-option
-          v-for="item in opt_lang"
-          :key="item.key"
-          :label="item.label"
-          :value="item.label"
-        >
+      <el-select v-model="query.data.lang" 
+                 v-on:change="onchange_query"
+                 placeholder="请选择">
+        <el-option v-for="item in opt_lang"
+                   v-bind:key="item.key"
+                   v-bind:label="item.label"
+                   v-bind:value="item.key">
         </el-option>
       </el-select>
     </div>
     <div class="app-doc-mgr-view-content">
-      <el-container style="height: 500px; border: 1px solid #eee">
+      <el-container style="height:80vh; border: 1px solid #eee">
         <el-aside width="320px" style="padding: 0px">
           <el-tree
             style="padding: 6px"
@@ -38,7 +39,7 @@
             v-bind:data="tree_catalog"
             default-expand-all
             node-key="id"
-            v-on:node-click="onclick_nav"
+            v-on:node-click="onclick_navItem"
             v-bind:props="defaultProps"
             v-bind:expand-on-click-node="false"
             v-bind:render-content="render_Nav"
@@ -46,20 +47,18 @@
           </el-tree>
         </el-aside>
         <el-main>
-          <div>
+          <div v-if="!bRoot">
             <el-row style="padding-bottom: 8px">
-              
-              <el-button style="margin-left: 16px;" size="mini" type="primary">保存上传</el-button>
+              <el-button style="margin-left: 16px;" size="mini" type="primary" @click="onclick_saveEditor">保存上传</el-button>
               <el-input v-model="editState.backup.label" style="padding-left: 16px;width:200px;"></el-input>
               <el-checkbox v-model="editState.backup.bDir" style="padding-left: 16px" size="mini"
                 >目录</el-checkbox
               >
               <el-checkbox v-model="editState.backup.bEnable" style="padding-left: 0px" size="mini"
-                >启用</el-checkbox
-              >
+                >启用</el-checkbox>
             </el-row>
 
-            <markdown-editor v-model="editState.md"></markdown-editor>
+            <markdown-editor style="height:650px" v-if="!editState.backup.bDir" v-model="editState.md_copy"></markdown-editor>
           </div>
         </el-main>
       </el-container>

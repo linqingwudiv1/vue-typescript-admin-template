@@ -8,6 +8,7 @@ import COS from 'cos-js-sdk-v5';
 import { file } from 'jszip';
 import { getUserCOSToken } from '@/api/users';
 import { GConst } from '@/Global/GConst';
+import { NewCOS } from '@/utils/cos';
 
 /**
  * 
@@ -20,8 +21,8 @@ interface IAppInfo
     url:string,
     bLatest:boolean,
     bEnable:boolean,
-    createTime:string,
-    updateTime:string,
+    createTime?:string,
+    updateTime?:string,
     bBeta:boolean,
     bForceUpdate:boolean
 
@@ -142,7 +143,10 @@ const default_appinfo:IAppInfo =
         this.loading.bUploading = true;        
         try 
         {
-            let {data} =  await createAppInfo(this.appinfo_copy);
+            let param = cloneDeep(this.appinfo_copy);
+            delete param.createTime;
+            delete param.updateTime;
+            let {data} =  await createAppInfo(param);
             this.appinfo_copy.id = data.id;
             this.$message({type:'success', message:'添加成功'});
             
@@ -151,8 +155,9 @@ const default_appinfo:IAppInfo =
             setTimeout(async() => {
                 await this.http_getAppInfos();
             }, 200);
-
-        }catch(err){
+        } 
+        catch(err)
+        {
             this.dialog.bSetupFileUploadCompleted = true;
         }
         this.loading.bUploading = false;
@@ -167,7 +172,6 @@ const default_appinfo:IAppInfo =
     }
 
 
-
     /**
      * 
      */
@@ -179,8 +183,7 @@ const default_appinfo:IAppInfo =
 
 
     async onclick_remove(item:IAppInfo)
-    {
-        console.log(item);
+    { 
         this.$confirm(`将永久删除[${item.appVersion}]版本, 是否继续?`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -230,41 +233,14 @@ const default_appinfo:IAppInfo =
     {
         let file:File = data.file;
 
-        let cos = new COS(
-            {
-                getAuthorization: (opts, callback)=>
-                {
-                    getUserCOSToken().then((res) => 
-                    {
-                        //console.log(`success ============  `, res.data);
-                        const data = res.data;
-                        const credentials = data.credentials;
-
-                        if (!data || !credentials) return console.error('credentials invalid');
-                        callback(
-                            {
-                                TmpSecretId: credentials.TmpSecretId,
-                                TmpSecretKey: credentials.TmpSecretKey,
-                                XCosSecurityToken: credentials.Token,
-                                StartTime: data.startTime, // 时间戳，单位秒，如：1580000000，建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
-                                ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
-                            })
-                    })
-                    .catch( (err) => 
-                    {
-                        this.$message({type:'error', message : err});
-                        console.error(`============  `, err);
-                    })
-                }
-            });
-            
+        let cos = NewCOS();
         
-        const cos_key = `AppInfo/${this.appinfo_copy.appName}/${this.appinfo_copy.appVersion}/setup.exe`;
+        const cos_key = `AppInfo/${this.appinfo_copy.appName}/package/${this.appinfo_copy.appVersion}/setup.exe`.toLocaleLowerCase();
         cos.sliceUploadFile({
-                Bucket: GConst.COSBuket , // Bucket 格式：test-1250000000
+                Bucket: GConst.COSBucket , // Bucket 格式：test-1250000000
                 Region: GConst.COSRegion,
-                Key: cos_key, /* 必须 */
-                Body: file,
+                Key   : cos_key, /* 必须 */
+                Body  : file,
                 onTaskReady:(progressData) =>
                 {
                     this.loading.bUploading = true;
@@ -296,7 +272,6 @@ const default_appinfo:IAppInfo =
         const upload = (this.$refs['setup-uploader'] as ElUpload);
         if((upload as any).uploadFiles.length > 0)
         {
-            console.log(' onclick_submitCreate s');
             if (this.dialog.bSetupFileUploadCompleted)
             {
                 await this.http_createAppInfo();
