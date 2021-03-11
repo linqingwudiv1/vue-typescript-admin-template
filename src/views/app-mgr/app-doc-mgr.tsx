@@ -446,6 +446,9 @@ export default class AppDocMgrView extends Vue
         }
     }
 
+    /**
+     * 
+     */
     private async onclick_submitCreate()
     {
         if (!this.createState.parent.children)
@@ -454,7 +457,7 @@ export default class AppDocMgrView extends Vue
         }
 
         const parent_key = this.getCOSKey(this.createState.parent);
-        this.createState.data.key = `${parent_key}/${this.createState.data.uuid}`;
+        this.createState.data.key = `${parent_key}/${this.createState.data.label}-${this.createState.data.uuid}`;
         this.createState.parent.children.push(this.createState.data);
 
         let url = await this.cos.getObjectUrl(

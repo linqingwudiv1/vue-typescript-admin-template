@@ -198,10 +198,9 @@ export default class extends Vue {
    */
   async http_request_uploading(data: any) {
     let file: File = data.file;
-    console.log(file);
     let cos = NewCOS();
 
-    const cos_key = `${this.basekey}/img/${moment().format('YYYYMMDD_HH_mm_ss')}-${file.name}`;
+    const cos_key = `${this.basekey}/img/${file.name}`;
     
     cos.putObject(
       {
