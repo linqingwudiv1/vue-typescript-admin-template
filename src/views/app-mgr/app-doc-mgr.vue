@@ -40,6 +40,8 @@
             default-expand-all
             node-key="id"
             v-on:node-click="onclick_navItem"
+            v-bind:draggable="false"
+            v-bind:allow-drop="onAllowDroping"
             v-bind:props="defaultProps"
             v-bind:expand-on-click-node="false"
             v-bind:render-content="render_Nav"
@@ -58,7 +60,7 @@
                 >启用</el-checkbox>
             </el-row>
 
-            <markdown-editor style="height:650px" v-if="!editState.backup.bDir" v-model="editState.md_copy"></markdown-editor>
+            <markdown-editor v-bind:basekey="editState.backup.key" height="650px" v-if="!editState.backup.bDir" v-model="editState.md_copy"></markdown-editor>
           </div>
         </el-main>
       </el-container>

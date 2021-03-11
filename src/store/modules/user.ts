@@ -86,7 +86,8 @@ class User extends VuexModule implements IUserState {
 
   @Action
   public async GetUserInfo() {
-    if (this.token === '') {
+    if (this.token === '') 
+    {
       throw Error('GetUserInfo: token is undefined!')
     }
     
@@ -124,8 +125,6 @@ class User extends VuexModule implements IUserState {
     // Generate dynamic accessible routes based on roles  
     await PermissionModule.GenerateRoutes(this.roles)
 
-    
-
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)
 
@@ -135,8 +134,9 @@ class User extends VuexModule implements IUserState {
 
   @Action({ rawError: true })
   public async LogOut() {
-    if (this.token === '') {
-      throw Error('LogOut: token is undefined!')
+    if (this.token === '') 
+    {
+      throw Error('LogOut: token is undefined!');
     }
     
     await logout();
@@ -145,6 +145,7 @@ class User extends VuexModule implements IUserState {
 
     // Reset visited views and cached views
     TagsViewModule.delAllViews()
+
     this.SET_TOKEN('')
     this.SET_ROLES([])
   }

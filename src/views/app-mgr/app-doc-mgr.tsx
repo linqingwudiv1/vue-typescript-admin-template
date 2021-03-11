@@ -1,7 +1,7 @@
-import { createAppInfo, deleteAppInfo, getAppInfos, updateAppInfo } from '@/api/appmgr';
+import { createAppInfo, deleteAppInfo, deleteDocAsset, getAppInfos, updateAppInfo } from '@/api/appmgr';
 import { Settings } from '@/layout/components';
 import { ElUpload } from 'element-ui/types/upload';
-import { cloneDeep } from 'lodash'
+import { clone, cloneDeep } from 'lodash'
 import { v4 as UUIDv4 } from 'uuid';
 import { Component, Vue } from 'vue-property-decorator'
 
@@ -82,7 +82,7 @@ const default_query: IQuery =
 
 const default_navItem: INavItem =
 {
-    key: 'appInfo/tmp',
+    key: 'appinfo/tmp',
     uuid: UUIDv4(),
     label: '新节点',
     bEnable: true,
@@ -91,6 +91,9 @@ const default_navItem: INavItem =
     children: []
 }
 
+/**
+ * 
+ */
 @Component({
     name: 'AppDocMgrView',
     components: {
@@ -189,8 +192,10 @@ export default class AppDocMgrView extends Vue
     async mounted()
     {
         this.cos = NewCOS();
-
         await this.http_getCatalog();
+
+        this.editState.data = this.tree_catalog[0];
+        this.editState.backup = cloneDeep(this.tree_catalog[0]);
     }
 
 
@@ -483,34 +488,56 @@ export default class AppDocMgrView extends Vue
      */
     private async edit_nav(data: any)
     {
+
+    }
+
+    private onAllowDroping(draggingNode:any, dropNode:any, type:any)
+    {
+        //console.log(draggingNode, dropNode, type);
+
+        if ( draggingNode.parent == dropNode.parent && 
+             draggingNode.level  == dropNode.level  && 
+             type != 'inner' )
+        {
+            //console.log('allow drop...')
+            return type != 'inner';
+        }
+        else 
+        {
+            //console.log('not drop...')
+            return type == 'inner';
+        }
+
+        
     }
 
     /**
      * 
      */
-    private async remove_nav(node: any, data: any)
+    private async remove_nav(node: any, data: INavItem)
     {
 
-        this.$confirm('确定移除当前选中文档?', 'Warning', {
+        this.$confirm('确定移除当前选中文档与其子目录?', 'Warning', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
         })
             .then(async () =>
             {
-
                 const parent = node.parent;
                 const children = parent.data.children || parent.data;
-                const index = children.findIndex((d: any) => d.id === data.id);
+                const index = children.findIndex((d: INavItem) => d.key === data.key);
+                
                 children.splice(index, 1);
-
+                
+                console.log(data);
+                await deleteDocAsset( data.key + '/' );
                 await this.http_UpdateCatalog();
 
                 this.$message({
                     type: 'success',
                     message: '删除成功!'
-                })
-                
+                });
             })
             .catch(err =>
             {

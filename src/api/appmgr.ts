@@ -55,3 +55,19 @@ export const updateAppInfo = (data:any) =>
         data: data
     })
 }
+
+
+
+/**
+ * 
+ * @param cosBuckey 
+ * @returns 
+ */
+ export const deleteDocAsset = (coskey:string)=>
+ {
+     return request({
+         url:`/asset/appinfo/DeleteDocAsset?key=${coskey}`,
+         method:'DELETE'
+     });
+
+ }
