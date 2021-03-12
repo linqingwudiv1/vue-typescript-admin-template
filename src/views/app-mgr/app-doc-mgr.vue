@@ -8,30 +8,37 @@
         >创建</el-button> -->
 
       <span style="padding: 0 15px">App :</span>
-      <el-select v-model="query.data.appName"
-                v-on:change="onchange_query"
-                 placeholder="请选择">
+      <el-select
+        v-model="query.data.appName"
+        v-on:change="onchange_query"
+        placeholder="请选择"
+      >
         <el-option
           v-for="item in appType"
           v-bind:key="item.value"
           v-bind:label="item.label"
-          v-bind:value="item.value">
+          v-bind:value="item.value"
+        >
         </el-option>
       </el-select>
 
       <span style="padding: 0 15px">语言 :</span>
-      <el-select v-model="query.data.lang" 
-                 v-on:change="onchange_query"
-                 placeholder="请选择">
-        <el-option v-for="item in opt_lang"
-                   v-bind:key="item.key"
-                   v-bind:label="item.label"
-                   v-bind:value="item.key">
+      <el-select
+        v-model="query.data.lang"
+        v-on:change="onchange_query"
+        placeholder="请选择"
+      >
+        <el-option
+          v-for="item in opt_lang"
+          v-bind:key="item.key"
+          v-bind:label="item.label"
+          v-bind:value="item.key"
+        >
         </el-option>
       </el-select>
     </div>
     <div class="app-doc-mgr-view-content">
-      <el-container style="height:80vh; border: 1px solid #eee">
+      <el-container style="height: 80vh; border: 1px solid #eee">
         <el-aside width="320px" style="padding: 0px">
           <el-tree
             style="padding: 6px"
@@ -51,34 +58,69 @@
         <el-main>
           <div v-if="!bRoot">
             <el-row style="padding-bottom: 8px">
-              <el-button style="margin-left: 16px;" size="mini" type="primary" @click="onclick_saveEditor">保存上传</el-button>
-              <el-input v-model="editState.backup.label" style="padding-left: 16px;width:200px;"></el-input>
-              <el-checkbox v-model="editState.backup.bDir" style="padding-left: 16px" size="mini"
+              <el-button
+                style="margin-left: 16px"
+                size="mini"
+                type="primary"
+                @click="onclick_saveEditor"
+                >保存上传</el-button
+              >
+              <el-input
+                v-model="editState.backup.label"
+                style="padding-left: 16px; width: 200px"
+              ></el-input>
+              <el-checkbox
+                v-model="editState.backup.bDir"
+                style="padding-left: 16px"
+                size="mini"
                 >目录</el-checkbox
               >
-              <el-checkbox v-model="editState.backup.bEnable" style="padding-left: 0px" size="mini"
-                >启用</el-checkbox>
+              <el-checkbox
+                v-model="editState.backup.bEnable"
+                style="padding-left: 0px"
+                size="mini"
+                >启用</el-checkbox
+              >
             </el-row>
 
-            <markdown-editor v-bind:basekey="editState.backup.key" height="650px" v-if="!editState.backup.bDir" v-model="editState.md_copy"></markdown-editor>
+            <markdown-editor
+              v-bind:basekey="editState.backup.key"
+              height="650px"
+              v-if="!editState.backup.bDir"
+              v-model="editState.md_copy"
+            ></markdown-editor>
           </div>
         </el-main>
       </el-container>
     </div>
 
-    <el-dialog width="30vw" title="添加新的文档" v-bind:visible.sync="dialog.bShowCreate">
+    <el-dialog
+      width="30vw"
+      title="添加新的文档"
+      v-bind:visible.sync="dialog.bShowCreate"
+    >
       <el-form label-width="100px">
         <!-- -->
         <el-form-item label="父类Key">
-          {{ getCOSKey( createState.parent) }}
+          {{ getCOSKey(createState.parent) }}
         </el-form-item>
         <el-form-item>
           <el-input v-model="createState.data.label"> </el-input>
         </el-form-item>
         <!-- -->
         <el-form-item>
-          <el-checkbox v-model="createState.data.bDir" style="padding-left: 16px" size="mini">目录</el-checkbox>
-          <el-checkbox v-model="createState.data.bEnable" style="padding-left: 0px" size="mini">启用</el-checkbox>
+          <el-checkbox
+            v-model="createState.data.bDir"
+            style="padding-left: 16px"
+            size="mini"
+            >目录</el-checkbox
+          >
+          <el-checkbox
+            v-model="createState.data.bEnable"
+            style="padding-left: 0px"
+            size="mini"
+            >启用</el-checkbox
+          >
         </el-form-item>
 
         <el-form-item>

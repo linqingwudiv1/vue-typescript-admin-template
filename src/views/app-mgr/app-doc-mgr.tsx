@@ -102,7 +102,6 @@ const default_navItem: INavItem =
 })
 export default class AppDocMgrView extends Vue
 {
-
     /**
      * 
      */
@@ -119,8 +118,6 @@ export default class AppDocMgrView extends Vue
         key: 'en_us',
         label: 'English-USA',
     }];
-
-
     /**
      * 
      */

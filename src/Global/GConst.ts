@@ -10,5 +10,8 @@ export class GConst
     public static readonly COSBucket:string = 'linqing-1251417173';
     /** COS Region */
     public static readonly COSRegion:string = 'ap-guangzhou';
-}
+    /** 默认的cos域名 */
+    public static readonly COSOrigin:string = 'http://linqing-1251417173.cos.ap-guangzhou.myqcloud.com';
 
+
+}
